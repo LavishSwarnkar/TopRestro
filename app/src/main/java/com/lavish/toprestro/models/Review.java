@@ -11,14 +11,22 @@ public class Review {
     public Date timestamp;
     public int starRating;
 
-    public Review(String userName, String ownerEmail, String review, int starRating) {
+    public Review(String userName, String review, String reply, int starRating) {
+        this.userName = userName;
+        this.review = review;
+        this.reply = reply;
+        timestamp = new Date();
+        this.starRating = starRating;
+    }
+
+    /*public Review(String userName, String ownerEmail, String review, int starRating) {
         this.userName = userName;
         this.review = review;
         this.ownerEmail = ownerEmail;
         this.starRating = starRating;
 
         timestamp = Calendar.getInstance().getTime();
-    }
+    }*/
 
     public String formattedDate(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM", Locale.ENGLISH);

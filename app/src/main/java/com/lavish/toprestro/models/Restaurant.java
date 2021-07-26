@@ -11,6 +11,13 @@ public class Restaurant {
     public Restaurant() {
     }
 
+    public Restaurant(String name, String imageURL, float avgRating, int noOfRatings) {
+        this.name = name;
+        this.imageURL = imageURL;
+        this.avgRating = avgRating;
+        this.noOfRatings = noOfRatings;
+    }
+
     public Restaurant(String name, String ownerEmail) {
         this.name = name;
         this.ownerEmail = ownerEmail;

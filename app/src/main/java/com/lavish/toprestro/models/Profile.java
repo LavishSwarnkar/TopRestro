@@ -1,13 +1,13 @@
 package com.lavish.toprestro.models;
 
-public class Owner {
+public class Profile {
 
     public String name, emailId;
 
-    public Owner() {
+    public Profile() {
     }
 
-    public Owner(String name, String emailId) {
+    public Profile(String name, String emailId) {
         this.name = name;
         this.emailId = emailId;
     }

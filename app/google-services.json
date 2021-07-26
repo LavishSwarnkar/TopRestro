@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "645070203948",
+    "project_id": "toprestro-f4c8d",
+    "storage_bucket": "toprestro-f4c8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645070203948:android:db5152f395738cf722b589",
+        "android_client_info": {
+          "package_name": "com.lavish.toprestro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645070203948-b7nhqmuo5t0ublpf0fbpgjt9rfmovvha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lavish.toprestro",
+            "certificate_hash": "51cf91fda89e83c38d8f2572c4ba2ab7817b62d7"
+          }
+        },
+        {
+          "client_id": "645070203948-9jeota2pfkaes5ls26hdsv88jdl7tj8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8eLVDHMZeKuBzoz5NuFM29oUhHFvBpXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645070203948-9jeota2pfkaes5ls26hdsv88jdl7tj8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
