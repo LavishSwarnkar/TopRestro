@@ -1,21 +1,12 @@
-package com.lavish.toprestro.activities.owner
+package com.lavish.toprestro.ui.owner
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.lavish.toprestro.databinding.CardRestroBinding
 import com.lavish.toprestro.databinding.HeaderOwnerActivityBinding
-import com.lavish.toprestro.databinding.HeaderUserRestroActivityBinding
-import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.other.Prefs
 

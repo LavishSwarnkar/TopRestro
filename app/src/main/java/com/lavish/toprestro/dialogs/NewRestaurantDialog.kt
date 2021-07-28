@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
@@ -14,7 +13,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
-import com.lavish.toprestro.activities.owner.OwnerActivity
+import com.lavish.toprestro.ui.owner.OwnerActivity
 import com.lavish.toprestro.databinding.DialogNewRetaurantBinding
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.owner.NewRestaurantHelper
@@ -101,36 +100,38 @@ class NewRestaurantDialog(val context: Context) {
         val restroName = b.nameEt.editText!!.text.trim().toString()
 
         val listener = object : OnCompleteListener<String> {
-            override fun onResult(imageUrl: String?) {
-                val restro = Restaurant(restroName, imageUrl)
-                uploadRestro(emailId, restro)
+            override fun onResult(t: String) {
+                val restro = Restaurant(name = restroName,
+                        ownerEmail = emailId,
+                        imageURL = t)
+                uploadRestro(emailId!!, restro)
             }
 
-            override fun onError(e: String?) {
+            override fun onError(e: String) {
                 app.hideLoadingDialog()
-                ErrorDialog(b.root.context).show(e!!)
+                ErrorDialog(b.root.context).show(e)
             }
         }
 
         RestaurantImageUploader()
                 .uploadImage(imageUri!!
-                        , emailId
+                        , emailId!!
                         , restroName
                         , listener)
     }
 
     private fun uploadRestro(emailId: String, restro: Restaurant) {
         NewRestaurantHelper()
-                .save(emailId, restro, object : OnCompleteListener<Void> {
+                .save(emailId, restro, object : OnCompleteListener<Void?> {
                     override fun onResult(t: Void?) {
                         app.hideLoadingDialog()
                         saveRestroLocallyAndReload(restro)
                         Toast.makeText(b.root.context, "Created new restaurant!", Toast.LENGTH_SHORT).show()
                     }
 
-                    override fun onError(e: String?) {
+                    override fun onError(e: String) {
                         app.hideLoadingDialog()
-                        ErrorDialog(b.root.context).show(e!!)
+                        ErrorDialog(b.root.context).show(e)
                     }
                 })
     }

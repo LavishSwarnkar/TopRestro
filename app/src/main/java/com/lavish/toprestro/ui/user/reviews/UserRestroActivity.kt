@@ -1,4 +1,4 @@
-package com.lavish.toprestro.activities.user.reviews
+package com.lavish.toprestro.ui.user.reviews
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,14 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.lavish.toprestro.App
 import com.lavish.toprestro.databinding.ActivityUserRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
+import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
+import com.lavish.toprestro.firebaseHelpers.user.ReviewsFetcher
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
 import com.lavish.toprestro.other.Constants
 
 class UserRestroActivity : AppCompatActivity() {
 
+    lateinit var adapter: ReviewsAdapter
+    lateinit var reviews: MutableList<Review>
+    private lateinit var app: App
     lateinit var restaurant: Restaurant
     lateinit var b: ActivityUserRestroBinding
 
@@ -22,9 +28,10 @@ class UserRestroActivity : AppCompatActivity() {
 
         b = ActivityUserRestroBinding.inflate(layoutInflater)
         setContentView(b.root)
+        app = application as App
 
         getRestroInfo()
-        setupRecyclerView()
+        fetchReviews()
     }
 
     private fun getRestroInfo() {
@@ -36,8 +43,36 @@ class UserRestroActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    private fun fetchReviews() {
+        app.showLoadingDialog(this)
+
+        ReviewsFetcher()
+                .fetch(restaurant.id!!, object : OnCompleteListener<MutableList<Review>>{
+                    override fun onResult(t: MutableList<Review>) {
+                        reviews = t
+                        setupRecyclerView()
+                    }
+
+                    override fun onError(e: String) {
+                        app.hideLoadingDialog()
+                        reviews = mutableListOf()
+                        ErrorDialog(this@UserRestroActivity).show(e)
+                    }
+                })
+    }
+
     private fun setupRecyclerView() {
-        val adapter = ReviewsAdapter(this, restaurant, dummyReviews())
+        //Check if reviews contain this user's review
+        val userEmail = app.profile?.emailId
+        var isRateReviewDone = false
+        for(review in reviews) {
+            if(review.userEmail == userEmail){
+                isRateReviewDone = true
+                break
+            }
+        }
+
+        adapter = ReviewsAdapter(this, restaurant, reviews, isRateReviewDone)
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
@@ -45,24 +80,8 @@ class UserRestroActivity : AppCompatActivity() {
 
         //Set adapter
         b.recyclerView.adapter = adapter
-    }
 
-    private fun dummyReviews(): List<Review> {
-        val s = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-
-        return listOf(
-                Review("Suresh", s, null, 4)
-                , Review("Manish", s, s, 3)
-                , Review("Kuriya", s, null, 2)
-                , Review("Nagji", s, null, 1)
-                , Review("Mohan", s, s, 5)
-                , Review("Koyalat", s, null, 4)
-        )
-    }
-
-    private fun showError(e: String) {
-        ErrorDialog(this)
-                .show(e)
+        app.hideLoadingDialog()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -6,7 +6,7 @@ import com.lavish.toprestro.models.Restaurant
 
 class NewRestaurantHelper {
 
-    fun save(ownerEmail: String, restaurant: Restaurant, listener: OnCompleteListener<Void>){
+    fun save(ownerEmail: String, restaurant: Restaurant, listener: OnCompleteListener<Void?>){
         FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .add(restaurant)

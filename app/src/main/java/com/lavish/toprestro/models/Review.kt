@@ -1,36 +1,29 @@
-package com.lavish.toprestro.models;
+package com.lavish.toprestro.models
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.text.SimpleDateFormat
+import java.util.*
 
-public class Review {
+data class Review(var id: String? = null,
+        var timestamp: Date = Date(),
 
-    public String id, userName, review, reply, ownerEmail, restaurantId;
-    public Date timestamp;
-    public int starRating;
+        var userName: String? = null,
+        var userEmail: String? = null,
 
-    public Review(String userName, String review, String reply, int starRating) {
-        this.userName = userName;
-        this.review = review;
-        this.reply = reply;
-        timestamp = new Date();
-        this.starRating = starRating;
+        var ownerEmail: String? = null,
+        var restaurantId: String? = null,
+
+        var starRating: Float? = 0f,
+        var review: String? = null,
+        var reply: String? = null) {
+
+    constructor() : this(userName = null)
+
+    fun formattedDate(): String {
+        val sdf = SimpleDateFormat("dd MMM", Locale.ENGLISH)
+        return sdf.format(timestamp)
     }
 
-    /*public Review(String userName, String ownerEmail, String review, int starRating) {
-        this.userName = userName;
-        this.review = review;
-        this.ownerEmail = ownerEmail;
-        this.starRating = starRating;
-
-        timestamp = Calendar.getInstance().getTime();
-    }*/
-
-    public String formattedDate(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM", Locale.ENGLISH);
-        return sdf.format(timestamp);
+    init {
+        timestamp = Date()
     }
-
 }

@@ -1,4 +1,4 @@
-package com.lavish.toprestro.activities.user
+package com.lavish.toprestro.ui.user
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.gson.Gson
-import com.lavish.toprestro.activities.user.reviews.UserRestroActivity
+import com.lavish.toprestro.ui.user.reviews.UserRestroActivity
 import com.lavish.toprestro.databinding.CardUserRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
@@ -24,7 +24,7 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
         resetImage()
 
         //Show Name & Image
-        loadImage(restaurant.imageURL)
+        loadImage(restaurant.imageURL!!)
         b.name.text = restaurant.name
 
         //Rating

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activities.user.reviews.UserRestroActivity">
+    tools:context=".ui.user.reviews.UserRestroActivity">
 
     <FrameLayout
         android:id="@+id/bannerRoot"
@@ -32,14 +32,15 @@
 
     <LinearLayout
         android:id="@+id/rateReviewRoot"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="16dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bannerRoot">
+        app:layout_constraintTop_toBottomOf="@+id/bannerRoot"
+        tools:visibility="visible">
 
         <TextView
             style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -50,6 +51,7 @@
             android:textStyle="bold" />
 
         <RatingBar
+            android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -122,5 +124,28 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pastReviewsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="rating,textView" />
+
+    <TextView
+        android:id="@+id/noReviews"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:padding="32dp"
+        android:background="@drawable/bg_review_card"
+        android:layout_height="wrap_content"
+        android:text="Be the first one to review this restaurant!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rateReviewRoot"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:textStyle="italic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

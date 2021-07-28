@@ -1,4 +1,4 @@
-package com.lavish.toprestro.activities.owner
+package com.lavish.toprestro.ui.owner
 
 import android.annotation.SuppressLint
 import android.view.View.*
@@ -23,7 +23,7 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
         //Basic
         b.userNameTv.text = review.userName
         b.dateTv.text = review.formattedDate()
-        b.ratingBar.rating = review.starRating.toFloat()
+        b.ratingBar.rating = review.starRating!!.toFloat()
         b.reviewTv.text = review.review
 
         //Reply
@@ -40,7 +40,7 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
         val inputListener = object : OnInputCompleteListener {
 
             //On reply sent
-            val listener = object : OnCompleteListener<Void> {
+            val listener = object : OnCompleteListener<Void?> {
                 override fun onResult(t: Void?) {
                     //TODO "Remove from list"
 
@@ -48,7 +48,7 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
                     app.hideLoadingDialog()
                 }
 
-                override fun onError(e: String?) {
+                override fun onError(e: String) {
                     ErrorDialog(b.root.context).show(e.toString())
                 }
 
@@ -59,7 +59,7 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
                 app.showLoadingDialog(b.root.context)
 
                 ReviewActionsHelper()
-                        .editReply(review.restaurantId, review.id, input, listener)
+                        .editReply(review.restaurantId!!, review.id!!, input, listener)
             }
         }
 

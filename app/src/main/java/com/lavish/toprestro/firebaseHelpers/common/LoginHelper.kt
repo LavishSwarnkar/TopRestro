@@ -36,12 +36,12 @@ class LoginHelper(val context: Context) {
                         //Fetch & save Restros for owner
                         if(type == TYPE_OWNER){
                             OwnerRestaurantsFetcher(context)
-                                    .fetch(emailId, object : OnCompleteListener<Void>{
+                                    .fetch(emailId, object : OnCompleteListener<Void?>{
                                         override fun onResult(t: Void?) {
-                                            this@LoginHelper.listener.onResult(profile?.name)
+                                            this@LoginHelper.listener.onResult(profile!!.name!!)
                                         }
 
-                                        override fun onError(e: String?) {
+                                        override fun onError(e: String) {
                                             listener.onError(it.toString())
                                         }
                                     })
@@ -49,7 +49,7 @@ class LoginHelper(val context: Context) {
 
                         //Done!
                         else {
-                            this@LoginHelper.listener.onResult(profile?.name)
+                            this@LoginHelper.listener.onResult(profile!!.name!!)
                         }
                     }
 
@@ -82,13 +82,13 @@ class LoginHelper(val context: Context) {
     private fun createAccount(name: String) {
         val profile = Profile(name, emailId)
 
-        val listener = object : OnCompleteListener<Void> {
+        val listener = object : OnCompleteListener<Void?> {
             override fun onResult(t: Void?) {
                 saveProfile(profile, type)
                 this@LoginHelper.listener.onResult(name)
             }
 
-            override fun onError(e: String?) {
+            override fun onError(e: String) {
                 this@LoginHelper.listener.onError(e)
             }
         }

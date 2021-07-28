@@ -7,7 +7,7 @@ import com.lavish.toprestro.models.Review
 
 class ReviewsFetcher() {
 
-    fun fetch(restroId: String, listener: OnCompleteListener<List<Review>>){
+    fun fetch(restroId: String, listener: OnCompleteListener<MutableList<Review>>){
         FirebaseFirestore.getInstance()
                 .collection("restaurants/$restroId/reviews")
                 .get()

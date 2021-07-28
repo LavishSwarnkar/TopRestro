@@ -1,11 +1,11 @@
-package com.lavish.toprestro.activities.common
+package com.lavish.toprestro.ui.common
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.lavish.toprestro.App
-import com.lavish.toprestro.activities.owner.OwnerActivity
-import com.lavish.toprestro.activities.user.MainActivity
+import com.lavish.toprestro.ui.owner.OwnerActivity
+import com.lavish.toprestro.ui.user.MainActivity
 import com.lavish.toprestro.other.Constants.*
 
 class SplashActivity : AppCompatActivity() {

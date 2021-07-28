@@ -8,7 +8,7 @@ import com.lavish.toprestro.other.Prefs
 
 class OwnerRestaurantsFetcher(val context: Context) {
 
-    fun fetch(ownerEmail: String, listener: OnCompleteListener<Void>){
+    fun fetch(ownerEmail: String, listener: OnCompleteListener<Void?>){
         FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .whereEqualTo("ownerEmail", ownerEmail)

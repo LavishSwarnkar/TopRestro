@@ -1,4 +1,4 @@
-package com.lavish.toprestro.activities.user
+package com.lavish.toprestro.ui.user
 
 import android.content.Context
 import android.view.LayoutInflater

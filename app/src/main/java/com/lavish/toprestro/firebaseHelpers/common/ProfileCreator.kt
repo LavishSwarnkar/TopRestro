@@ -6,12 +6,12 @@ import com.lavish.toprestro.models.Profile
 
 class ProfileCreator {
 
-    fun createProfile(profile: Profile, type: String, listener: OnCompleteListener<Void>) {
+    fun createProfile(profile: Profile, type: String, listener: OnCompleteListener<Void?>) {
         FirebaseFirestore.getInstance()
                 .document("${type}/${profile.emailId}")
                 .set(profile)
                 .addOnSuccessListener { listener.onResult(null) }
-                .addOnFailureListener { listener.onError(it.message) }
+                .addOnFailureListener { listener.onError(it.message.toString()) }
     }
 
 }

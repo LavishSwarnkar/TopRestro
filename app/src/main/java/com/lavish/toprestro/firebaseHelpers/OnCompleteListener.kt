@@ -1,8 +1,6 @@
-package com.lavish.toprestro.firebaseHelpers;
+package com.lavish.toprestro.firebaseHelpers
 
-public interface OnCompleteListener<T> {
-
-    void onResult(T t);
-    void onError(String e);
-
+interface OnCompleteListener<T> {
+    fun onResult(t: T)
+    fun onError(e: String)
 }

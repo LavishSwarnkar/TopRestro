@@ -1,14 +1,9 @@
-package com.lavish.toprestro.models;
+package com.lavish.toprestro.models
 
-public class Profile {
+data class Profile(
+        var name: String? = null,
+        var emailId: String? = null) {
 
-    public String name, emailId;
+    constructor() : this(name = null)
 
-    public Profile() {
-    }
-
-    public Profile(String name, String emailId) {
-        this.name = name;
-        this.emailId = emailId;
-    }
 }

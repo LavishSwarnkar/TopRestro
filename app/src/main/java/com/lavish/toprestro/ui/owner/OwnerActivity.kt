@@ -1,4 +1,4 @@
-package com.lavish.toprestro.activities.owner
+package com.lavish.toprestro.ui.owner
 
 import android.app.Activity
 import android.content.Intent
@@ -60,16 +60,7 @@ class OwnerActivity : AppCompatActivity() {
     }
 
     private fun dummyReviews(): List<Review> {
-        val s = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-
-        return listOf(
-                Review("Suresh", s, null, 4)
-                , Review("Manish", s, s, 3)
-                , Review("Kuriya", s, null, 2)
-                , Review("Nagji", s, null, 1)
-                , Review("Mohan", s, s, 5)
-                , Review("Koyalat", s, null, 4)
-        )
+        return emptyList()
     }
 
     fun showNewRestaurantDialog() {

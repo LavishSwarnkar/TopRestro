@@ -1,25 +1,13 @@
-package com.lavish.toprestro.models;
+package com.lavish.toprestro.models
 
-public class Restaurant {
+data class Restaurant(
+        var id: String? = null,
+        var name: String? = null,
+        var imageURL: String? = null,
+        var ownerEmail: String? = null,
+        var avgRating: Float = 0f,
+        var noOfRatings: Int = 0) {
 
-    //TODO : Image upload & compress
+    constructor() : this(name = null)
 
-    public String id, name, imageURL, ownerEmail;
-    public float avgRating;
-    public int noOfRatings;
-
-    public Restaurant() {
-    }
-
-    public Restaurant(String name, String imageURL, float avgRating, int noOfRatings) {
-        this.name = name;
-        this.imageURL = imageURL;
-        this.avgRating = avgRating;
-        this.noOfRatings = noOfRatings;
-    }
-
-    public Restaurant(String name, String ownerEmail) {
-        this.name = name;
-        this.ownerEmail = ownerEmail;
-    }
 }

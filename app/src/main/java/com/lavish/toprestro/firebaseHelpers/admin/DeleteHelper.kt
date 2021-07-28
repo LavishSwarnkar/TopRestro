@@ -6,7 +6,7 @@ import com.lavish.toprestro.other.Constants.TYPE_OWNER
 
 class DeleteHelper {
 
-    fun delete(id: String, type: String, listener: OnCompleteListener<Void>){
+    fun delete(id: String, type: String, listener: OnCompleteListener<Void?>){
         FirebaseFirestore.getInstance()
                 .document("$type/$id")
                 .delete()
@@ -24,7 +24,7 @@ class DeleteHelper {
                 }
     }
 
-    private fun deleteRestaurants(ownerEmail: String, listener: OnCompleteListener<Void>) {
+    private fun deleteRestaurants(ownerEmail: String, listener: OnCompleteListener<Void?>) {
         FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .whereEqualTo("ownerEmail", ownerEmail)
