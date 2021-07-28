@@ -1,14 +1,12 @@
 package com.lavish.toprestro.firebaseHelpers.owner
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.models.Review
 
 class NewRestaurantHelper {
 
-    fun fetch(ownerEmail: String, restaurant: Restaurant, listener: OnCompleteListener<List<Review>>){
+    fun save(ownerEmail: String, restaurant: Restaurant, listener: OnCompleteListener<Void>){
         FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .add(restaurant)

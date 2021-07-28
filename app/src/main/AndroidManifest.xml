@@ -10,6 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRestro">
+        <activity android:name=".activities.owner.OwnerActivity"
+            android:label="TopRestro Owner" />
         <activity
             android:name=".activities.common.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -20,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.common.LoginActivity" />
-
         <activity android:name=".activities.user.MainActivity" />
-        <activity android:name=".activities.user.reviews.UserRestroActivity"
-            android:parentActivityName=".activities.user.MainActivity"/>
+        <activity
+            android:name=".activities.user.reviews.UserRestroActivity"
+            android:parentActivityName=".activities.user.MainActivity" />
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@ class LoginHelper(val context: Context) {
                     //Existing user
                     if(it.exists()){
                         val profile = it.toObject(Profile::class.java)
-                        saveProfile(profile)
+                        saveProfile(profile, type)
 
                         //Fetch & save Restros for owner
                         if(type == TYPE_OWNER){
@@ -63,8 +63,8 @@ class LoginHelper(val context: Context) {
                 }
     }
 
-    private fun saveProfile(profile: Profile?) {
-        Prefs(context).saveProfile(profile)
+    private fun saveProfile(profile: Profile?, type: String) {
+        Prefs(context).saveProfile(profile, type)
         (context.applicationContext as App).profile = profile
     }
 
@@ -84,7 +84,7 @@ class LoginHelper(val context: Context) {
 
         val listener = object : OnCompleteListener<Void> {
             override fun onResult(t: Void?) {
-                saveProfile(profile)
+                saveProfile(profile, type)
                 this@LoginHelper.listener.onResult(name)
             }
 

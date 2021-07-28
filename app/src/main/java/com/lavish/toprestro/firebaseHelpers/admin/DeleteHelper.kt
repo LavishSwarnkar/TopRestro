@@ -39,8 +39,8 @@ class DeleteHelper {
 
                     batch.commit().addOnSuccessListener {
                         listener.onResult(null)
-                    }.addOnFailureListener {
-                        listener.onError(it.toString())
+                    }.addOnFailureListener { e ->
+                        listener.onError(e.toString())
                     }
                 }
                 .addOnFailureListener {

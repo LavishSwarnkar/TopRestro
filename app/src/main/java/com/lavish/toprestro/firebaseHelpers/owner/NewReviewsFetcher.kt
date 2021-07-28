@@ -7,9 +7,9 @@ import com.lavish.toprestro.models.Review
 
 class NewReviewsFetcher() {
 
-    fun fetch(ownerEmail: String, restaurantId: String, listener: OnCompleteListener<List<Review>>){
+    fun fetch(ownerEmail: String, listener: OnCompleteListener<List<Review>>){
         FirebaseFirestore.getInstance()
-                .collection("restaurants/$restaurantId/reviews")
+                .collectionGroup("reviews")
                 .whereEqualTo("ownerEmail", ownerEmail)
                 .whereEqualTo("reply", null)
                 .orderBy("timestamp", Query.Direction.DESCENDING)

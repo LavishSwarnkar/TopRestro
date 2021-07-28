@@ -1,27 +1,29 @@
-package com.lavish.toprestro.activities.common;
+package com.lavish.toprestro.activities.common
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.lavish.toprestro.App
+import com.lavish.toprestro.activities.owner.OwnerActivity
+import com.lavish.toprestro.activities.user.MainActivity
+import com.lavish.toprestro.other.Constants.*
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+class SplashActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-import com.lavish.toprestro.App;
-import com.lavish.toprestro.activities.user.MainActivity;
+        val app = applicationContext as App
 
-public class SplashActivity extends AppCompatActivity {
+        if (app.isLoggedIn) {
+            when(app.loggedInAs) {
+                TYPE_USER -> startActivity(Intent(this, MainActivity::class.java))
+                TYPE_OWNER -> startActivity(Intent(this, OwnerActivity::class.java))
+                TYPE_ADMIN -> startActivity(Intent(this, MainActivity::class.java))
+            }
+        }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        else startActivity(Intent(this, LoginActivity::class.java))
 
-        App app = ((App) getApplicationContext());
-
-        if(app.isLoggedIn())
-            startActivity(new Intent(this, MainActivity.class));
-        else
-            startActivity(new Intent(this, LoginActivity.class));
-
-        finish();
+        finish()
     }
 }

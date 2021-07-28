@@ -26,6 +26,8 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
             }
         }
 
+        //TODO : Show rate & review only if not yet reviewed
+
         //Load banner image
         Glide.with(b.root)
                 .asBitmap()

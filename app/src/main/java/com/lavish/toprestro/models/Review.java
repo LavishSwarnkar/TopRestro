@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class Review {
 
-    public String id, userName, review, reply, ownerEmail;
+    public String id, userName, review, reply, ownerEmail, restaurantId;
     public Date timestamp;
     public int starRating;
 

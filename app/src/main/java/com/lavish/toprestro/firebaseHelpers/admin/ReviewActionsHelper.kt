@@ -4,7 +4,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 
-class ReviewAdminActionsHelper {
+class ReviewActionsHelper {
 
     fun deleteReview(restaurantId: String, reviewId: String, listener: OnCompleteListener<Void>){
         FirebaseFirestore.getInstance()
@@ -29,11 +29,11 @@ class ReviewAdminActionsHelper {
     }
 
     fun deleteReply(restaurantId: String, reviewId: String, listener: OnCompleteListener<Void>){
-        val map = mapOf<String, Any>("reply" to FieldValue.delete())
+        val map = mapOf<String, Any?>("reply" to null)
         editReview(restaurantId, reviewId, map, listener)
     }
 
-    private fun editReview(restaurantId: String, reviewId: String, map: Map<String, Any>, listener: OnCompleteListener<Void>){
+    private fun editReview(restaurantId: String, reviewId: String, map: Map<String, Any?>, listener: OnCompleteListener<Void>){
         FirebaseFirestore.getInstance()
                 .document("restaurants/$restaurantId/reviews/$reviewId")
                 .update(map)
