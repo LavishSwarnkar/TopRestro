@@ -5,6 +5,7 @@ public class Constants {
     public static final String TYPE_USER = "users"
             , TYPE_OWNER = "owners"
             , TYPE_ADMIN = "admins"
+            , TYPE_RESTAURANT = "restaurants"
 
             , RESTAURANT_INFO_KEY = "restro";
 

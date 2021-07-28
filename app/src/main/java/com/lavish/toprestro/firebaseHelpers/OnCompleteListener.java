@@ -1,4 +1,4 @@
-package com.lavish.toprestro.firebaseHelpers.common;
+package com.lavish.toprestro.firebaseHelpers;
 
 public interface OnCompleteListener<T> {
 

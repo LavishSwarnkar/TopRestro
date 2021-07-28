@@ -18,7 +18,7 @@ import com.lavish.toprestro.R;
 import com.lavish.toprestro.activities.user.MainActivity;
 import com.lavish.toprestro.dialogs.ErrorDialog;
 import com.lavish.toprestro.firebaseHelpers.common.LoginHelper;
-import com.lavish.toprestro.firebaseHelpers.common.OnCompleteListener;
+import com.lavish.toprestro.firebaseHelpers.OnCompleteListener;
 import com.lavish.toprestro.other.Constants;
 
 import java.util.Collections;

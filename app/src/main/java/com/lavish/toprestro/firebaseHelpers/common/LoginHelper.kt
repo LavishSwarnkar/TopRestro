@@ -7,7 +7,10 @@ import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.dialogs.OnInputCompleteListener
 import com.lavish.toprestro.dialogs.TextInputDialog
+import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
+import com.lavish.toprestro.firebaseHelpers.owner.OwnerRestaurantsFetcher
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.Constants.TYPE_OWNER
 import com.lavish.toprestro.other.Prefs
 
 class LoginHelper(val context: Context) {
@@ -30,13 +33,33 @@ class LoginHelper(val context: Context) {
                         val profile = it.toObject(Profile::class.java)
                         saveProfile(profile)
 
-                        this@LoginHelper.listener.onResult(profile?.name)
+                        //Fetch & save Restros for owner
+                        if(type == TYPE_OWNER){
+                            OwnerRestaurantsFetcher(context)
+                                    .fetch(emailId, object : OnCompleteListener<Void>{
+                                        override fun onResult(t: Void?) {
+                                            this@LoginHelper.listener.onResult(profile?.name)
+                                        }
+
+                                        override fun onError(e: String?) {
+                                            listener.onError(it.toString())
+                                        }
+                                    })
+                        }
+
+                        //Done!
+                        else {
+                            this@LoginHelper.listener.onResult(profile?.name)
+                        }
                     }
 
                     //New user
                     else {
                         inputName()
                     }
+                }
+                .addOnFailureListener {
+                    listener.onError(it.toString())
                 }
     }
 
@@ -59,7 +82,7 @@ class LoginHelper(val context: Context) {
     private fun createAccount(name: String) {
         val profile = Profile(name, emailId)
 
-        val listener = object : OnCompleteListener<Void>{
+        val listener = object : OnCompleteListener<Void> {
             override fun onResult(t: Void?) {
                 saveProfile(profile)
                 this@LoginHelper.listener.onResult(name)
