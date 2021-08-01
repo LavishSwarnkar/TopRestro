@@ -48,4 +48,11 @@ class Prefs(val context: Context) {
         saveRestros(restros)
     }
 
+    fun clear() {
+        context.getSharedPreferences("main", MODE_PRIVATE)
+                .edit()
+                .clear()
+                .commit()
+    }
+
 }

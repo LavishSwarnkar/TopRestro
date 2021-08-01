@@ -58,9 +58,9 @@
         android:id="@+id/replyGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="divider,replyArrow,replyTv"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/divider"
@@ -77,9 +77,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/replyTv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@+id/replyTv"
         app:srcCompat="@drawable/ic_reply_arrow" />
 
     <TextView

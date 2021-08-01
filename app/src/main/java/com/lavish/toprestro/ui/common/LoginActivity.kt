@@ -71,7 +71,8 @@ class LoginActivity : AppCompatActivity() {
             app!!.showLoadingDialog(this)
             postLogin(user!!.email)
         } else {
-            ErrorDialog(this).show(String.format(getString(R.string.error_login), result.idpResponse!!.error!!.errorCode))
+            Toast.makeText(this, "Sign in cancelled!", Toast.LENGTH_SHORT).show()
+            //ErrorDialog(this).show(String.format(getString(R.string.error_login), result.resultCode))
         }
     }
 

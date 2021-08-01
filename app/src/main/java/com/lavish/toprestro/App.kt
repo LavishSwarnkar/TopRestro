@@ -53,12 +53,11 @@ class App : Application() {
     val isLoggedIn: Boolean
         get() = profile != null
 
-    //TODO : Implement offline method
-    /*val isOffline: Boolean
+    val isOffline: Boolean
         get() {
             val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
             val wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             val dataNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
             return !(wifiNetworkInfo!!.isConnected || dataNetworkInfo!!.isConnected)
-        }*/
+        }
 }

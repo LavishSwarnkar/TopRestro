@@ -13,13 +13,14 @@ import com.lavish.toprestro.other.Prefs
 class OwnerHeaderViewHolder(val b: HeaderOwnerActivityBinding) : RecyclerView.ViewHolder(b.root){
 
     @SuppressLint("SetTextI18n")
-    fun bind() {
+    fun bind(noOfReviews: Int) {
         //Get saved restaurants
         val restaurants = Prefs(b.root.context).getRestros()
 
         inflateRestaurantCards(restaurants)
-
         setupNewRestaurantsHandler()
+
+        b.noReviews.visibility = if(noOfReviews == 0) VISIBLE else GONE
     }
 
     private fun setupNewRestaurantsHandler() {

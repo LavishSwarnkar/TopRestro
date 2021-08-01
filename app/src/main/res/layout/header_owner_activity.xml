@@ -84,4 +84,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
+    <TextView
+        android:id="@+id/noReviews"
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:padding="32dp"
+        android:background="@drawable/bg_review_card"
+        android:layout_height="wrap_content"
+        android:text="No new reviews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newReviewsTitle"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:textStyle="italic" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

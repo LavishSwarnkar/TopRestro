@@ -28,7 +28,7 @@ class OwnerReviewsAdapter(val context: Context, val reviews: List<Review>) : Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(position == 0)
-            (holder as OwnerHeaderViewHolder).bind()
+            (holder as OwnerHeaderViewHolder).bind(reviews.size)
         else
             (holder as OwnerReviewViewHolder).bind(reviews[position - 1])
     }

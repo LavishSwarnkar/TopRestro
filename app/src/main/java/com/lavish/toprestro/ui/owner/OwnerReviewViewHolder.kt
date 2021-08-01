@@ -27,10 +27,16 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
         b.reviewTv.text = review.review
 
         //Reply
-        b.replyGroup.visibility = GONE
-        b.replyBtn.visibility = VISIBLE
-        b.replyBtn.setOnClickListener {
-            handleNewReply(review)
+        if(review.reply == null){
+            b.replyGroup.visibility = GONE
+            b.replyBtn.visibility = VISIBLE
+            b.replyBtn.setOnClickListener {
+                handleNewReply(review)
+            }
+        } else {
+            b.replyTv.text = review.reply
+            b.replyGroup.visibility = VISIBLE
+            b.replyBtn.visibility = GONE
         }
     }
 
@@ -39,24 +45,25 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
 
         val inputListener = object : OnInputCompleteListener {
 
-            //On reply sent
-            val listener = object : OnCompleteListener<Void?> {
-                override fun onResult(t: Void?) {
-                    //TODO "Remove from list"
-
-                    Toast.makeText(b.root.context, "Done!", Toast.LENGTH_SHORT).show()
-                    app.hideLoadingDialog()
-                }
-
-                override fun onError(e: String) {
-                    ErrorDialog(b.root.context).show(e.toString())
-                }
-
-            }
-
             //On reply input done
             override fun onSubmit(input: String) {
                 app.showLoadingDialog(b.root.context)
+
+                //On reply sent
+                val listener = object : OnCompleteListener<Void?> {
+                    override fun onResult(t: Void?) {
+                        review.reply = input
+                        bind(review)
+
+                        Toast.makeText(b.root.context, "Done!", Toast.LENGTH_SHORT).show()
+                        app.hideLoadingDialog()
+                    }
+
+                    override fun onError(e: String) {
+                        ErrorDialog(b.root.context).show(e.toString())
+                    }
+
+                }
 
                 ReviewActionsHelper()
                         .editReply(review.restaurantId!!, review.id!!, input, listener)

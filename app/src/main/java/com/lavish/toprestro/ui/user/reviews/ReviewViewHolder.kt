@@ -20,7 +20,7 @@ class ReviewViewHolder(private val b: CardReviewBinding)
         //Review Reply
         if(review.reply != null){
             //TODO : "Owner : "
-            b.reviewTv.text = review.reply
+            b.replyTv.text = review.reply
             b.replyGroup.visibility = VISIBLE
         } else {
             b.replyGroup.visibility = GONE
