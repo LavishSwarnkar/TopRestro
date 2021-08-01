@@ -14,6 +14,7 @@ import com.lavish.toprestro.firebaseHelpers.common.AllRestaurantsFetcher
 import com.lavish.toprestro.models.Restaurant
 
 class MainActivity : AppCompatActivity() {
+    var restros: MutableList<Restaurant>? = null
     private lateinit var app: App
     private lateinit var adapter: RestaurantsAdapter
     lateinit var b: ActivityMainBinding
@@ -33,8 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         AllRestaurantsFetcher()
                 .fetch(object : OnCompleteListener<MutableList<Restaurant>> {
-                    override fun onResult(restros: MutableList<Restaurant>) {
-                        setupAdapter(restros)
+                    override fun onResult(t: MutableList<Restaurant>) {
+                        restros = t
+                        setupAdapter(t)
                     }
 
                     override fun onError(e: String) {
@@ -70,6 +72,24 @@ class MainActivity : AppCompatActivity() {
 
         setupFilterHandler()
         app.hideLoadingDialog()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val updatedRestro = (application as App).updatedRestro
+        if(updatedRestro != null && restros != null){
+            for(i in 0 until restros!!.size) {
+                val restaurant = restros!![i]
+                if(restaurant.id == updatedRestro.id){
+                    restros!!.removeAt(i)
+                    restros!!.add(i, updatedRestro)
+                    setupAdapter(restros!!)
+
+                    app.updatedRestro = null
+                }
+            }
+        }
     }
 
 }

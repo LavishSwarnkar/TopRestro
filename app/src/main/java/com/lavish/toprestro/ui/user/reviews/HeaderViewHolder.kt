@@ -29,15 +29,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
         this.restaurant = restaurant
         this.noOfReviews = noOfReviews
 
-        //Show rating
-        b.rating.apply {
-            if (restaurant.noOfRatings > 0){
-                text = "${String.format("%.1f", restaurant.avgRating)} ★"
-                visibility = View.VISIBLE
-            } else {
-                visibility = View.GONE
-            }
-        }
+        showRating()
 
         //Rate Review visibility
         b.rateReviewRoot.visibility = if(isRateReviewDone) GONE else VISIBLE
@@ -65,6 +57,17 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
         //Handle 0 reviews case
         handleReviewsVisibility()
+    }
+
+    private fun showRating() {
+        b.rating.apply {
+            if (restaurant.noOfRatings > 0){
+                text = "${String.format("%.1f", restaurant.avgRating)} ★"
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+        }
     }
 
     private fun validateRateReviewInput() {
@@ -95,6 +98,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
                         noOfReviews++
                         handleReviewsVisibility()
                         onReviewDone(review)
+                        showRating()
                     }
 
                     override fun onError(e: String) {
@@ -103,17 +107,18 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
                     }
                 }
 
-                val newAvgRating = (restaurant.avgRating + rating)/(restaurant.noOfRatings + 1)
+                restaurant.noOfRatings++
+                restaurant.avgRating = (restaurant.avgRating + rating)/restaurant.noOfRatings
 
                 NewReviewHelper()
-                        .saveNewReview(restaurant.id!!, newAvgRating, review, listener)
+                        .saveNewReview(restaurant.id!!, restaurant.avgRating, review, listener)
             }
         }
     }
 
     private fun onReviewDone(review: Review) {
         b.rateReviewRoot.visibility = GONE
-        (b.root.context as UserRestroActivity).showNewReview(review)
+        (b.root.context as UserRestroActivity).showNewReview(restaurant, review)
     }
 
     private fun handleReviewsVisibility() {
@@ -128,9 +133,10 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
 }
 
-private fun UserRestroActivity.showNewReview(review: Review) {
+private fun UserRestroActivity.showNewReview(restaurant: Restaurant, review: Review) {
     reviews.add(0, review)
     adapter.notifyItemInserted(1)
+    (applicationContext as App).updatedRestro = restaurant
 }
 
 

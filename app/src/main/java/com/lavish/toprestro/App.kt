@@ -8,11 +8,14 @@ import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.view.ViewGroup
 import android.view.Window
+import androidx.lifecycle.ViewModelProvider
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.other.Prefs
 
 class App : Application() {
 
+    var updatedRestro: Restaurant? = null
     var profile: Profile? = null
     var loggedInAs: String? = null
 
@@ -50,11 +53,12 @@ class App : Application() {
     val isLoggedIn: Boolean
         get() = profile != null
 
-    val isOffline: Boolean
+    //TODO : Implement offline method
+    /*val isOffline: Boolean
         get() {
             val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
             val wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             val dataNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
             return !(wifiNetworkInfo!!.isConnected || dataNetworkInfo!!.isConnected)
-        }
+        }*/
 }
