@@ -8,8 +8,10 @@ import com.lavish.toprestro.R
 import com.lavish.toprestro.dialogs.OnInputCompleteListener
 import com.lavish.toprestro.dialogs.TextInputDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
+import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
 import com.lavish.toprestro.firebaseHelpers.owner.OwnerRestaurantsFetcher
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.Constants.TYPE_ADMIN
 import com.lavish.toprestro.other.Constants.TYPE_OWNER
 import com.lavish.toprestro.other.Prefs
 
@@ -43,6 +45,21 @@ class LoginHelper(val context: Context) {
 
                                         override fun onError(e: String) {
                                             listener.onError(it.toString())
+                                        }
+                                    })
+                        }
+
+                        //Check for Admin
+                        else if(type == TYPE_ADMIN){
+                            AdminHelper()
+                                    .checkIfAdmin(emailId, object : OnCompleteListener<Profile?> {
+                                        override fun onResult(t: Profile?) {
+                                            saveProfile(t, type)
+                                            this@LoginHelper.listener.onResult(t!!.name!!)
+                                        }
+
+                                        override fun onError(e: String) {
+                                            this@LoginHelper.listener.onError(e)
                                         }
                                     })
                         }

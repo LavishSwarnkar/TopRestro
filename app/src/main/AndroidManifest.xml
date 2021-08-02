@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRestro">
-        <activity android:name=".ui.owner.OwnerActivity"
+        <activity android:name=".ui.admin.ManageUsersActivity"></activity>
+        <activity android:name=".ui.admin.AdminActivity" />
+        <activity
+            android:name=".ui.owner.OwnerActivity"
             android:label="TopRestro Owner" />
         <activity
             android:name=".ui.common.SplashActivity"

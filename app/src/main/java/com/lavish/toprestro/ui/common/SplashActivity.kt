@@ -7,6 +7,7 @@ import com.lavish.toprestro.App
 import com.lavish.toprestro.ui.owner.OwnerActivity
 import com.lavish.toprestro.ui.user.MainActivity
 import com.lavish.toprestro.other.Constants.*
+import com.lavish.toprestro.ui.admin.AdminActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
             when(app.loggedInAs) {
                 TYPE_USER -> startActivity(Intent(this, MainActivity::class.java))
                 TYPE_OWNER -> startActivity(Intent(this, OwnerActivity::class.java))
-                TYPE_ADMIN -> startActivity(Intent(this, MainActivity::class.java))
+                TYPE_ADMIN -> startActivity(Intent(this, AdminActivity::class.java))
             }
         }
 
