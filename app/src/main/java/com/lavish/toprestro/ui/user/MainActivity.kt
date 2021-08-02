@@ -1,14 +1,17 @@
 package com.lavish.toprestro.ui.user
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.ActivityMainBinding
@@ -16,6 +19,7 @@ import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.common.AllRestaurantsFetcher
 import com.lavish.toprestro.models.Restaurant
+import com.lavish.toprestro.other.Constants
 import com.lavish.toprestro.other.LogoutHelper
 
 class MainActivity : AppCompatActivity() {
@@ -45,11 +49,26 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: String) {
-                        app.hideLoadingDialog()
-                        ErrorDialog(this@MainActivity)
-                                .show(e)
+                        if(e == Constants.ACCESS_DENIED) {
+                            onAccessDenied()
+                        } else {
+                            app.hideLoadingDialog()
+                            ErrorDialog(this@MainActivity).show(e)
+                        }
                     }
                 })
+    }
+
+    private fun onAccessDenied() {
+        MaterialAlertDialogBuilder(this)
+                .setCancelable(false)
+                .setTitle("Access Denied!")
+                .setMessage("Your account has been deleted. You have been logged out!")
+                .setPositiveButton("OKAY") { dialog, which ->
+                    dialog.dismiss()
+                    LogoutHelper().logout(this)
+                }.show()
+
     }
 
     private fun setupFilterHandler() {

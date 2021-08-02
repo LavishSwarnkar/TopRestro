@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lavish.toprestro.App
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
 
@@ -49,6 +50,8 @@ class Prefs(val context: Context) {
     }
 
     fun clear() {
+        (context.applicationContext as App).profile = null
+
         context.getSharedPreferences("main", MODE_PRIVATE)
                 .edit()
                 .clear()

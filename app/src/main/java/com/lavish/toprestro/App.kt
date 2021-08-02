@@ -9,6 +9,8 @@ import android.net.ConnectivityManager
 import android.view.ViewGroup
 import android.view.Window
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.other.Prefs
