@@ -11,6 +11,7 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
 import com.lavish.toprestro.firebaseHelpers.owner.OwnerRestaurantsFetcher
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.Constants
 import com.lavish.toprestro.other.Constants.TYPE_ADMIN
 import com.lavish.toprestro.other.Constants.TYPE_OWNER
 import com.lavish.toprestro.other.Prefs
@@ -54,8 +55,12 @@ class LoginHelper(val context: Context) {
                             AdminHelper()
                                     .checkIfAdmin(emailId, object : OnCompleteListener<Profile?> {
                                         override fun onResult(t: Profile?) {
-                                            saveProfile(t, type)
-                                            this@LoginHelper.listener.onResult(t!!.name!!)
+                                            if(profile == null)
+                                                this@LoginHelper.listener.onError(Constants.ACCESS_DENIED)
+                                            else {
+                                                saveProfile(t, type)
+                                                this@LoginHelper.listener.onResult(t!!.name!!)
+                                            }
                                         }
 
                                         override fun onError(e: String) {

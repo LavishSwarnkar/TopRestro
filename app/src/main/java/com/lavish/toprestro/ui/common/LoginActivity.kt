@@ -19,6 +19,8 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.common.LoginHelper
 import com.lavish.toprestro.other.Constants
 import com.lavish.toprestro.other.Constants.*
+import com.lavish.toprestro.other.LogoutHelper
+import com.lavish.toprestro.ui.admin.AdminActivity
 
 class LoginActivity : AppCompatActivity() {
     private var userType: String? = null
@@ -89,13 +91,20 @@ class LoginActivity : AppCompatActivity() {
                         when(userType) {
                             TYPE_USER -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             TYPE_OWNER -> startActivity(Intent(this@LoginActivity, OwnerActivity::class.java))
-                            TYPE_ADMIN -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            TYPE_ADMIN -> startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
                         }
                         finish()
                     }
 
                     override fun onError(e: String) {
                         app!!.hideLoadingDialog()
+
+                        if(e == ACCESS_DENIED){
+                            LogoutHelper().logout(this@LoginActivity)
+                            ErrorDialog(this@LoginActivity).show(e)
+                            return
+                        }
+
                         ErrorDialog(this@LoginActivity).show(
                                 getString(R.string.error_fetch_profile) + e
                         )

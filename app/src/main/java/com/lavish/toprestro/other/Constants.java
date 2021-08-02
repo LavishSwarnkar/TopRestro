@@ -1,5 +1,7 @@
 package com.lavish.toprestro.other;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Constants {
 
     public static final String TYPE_USER = "users"
@@ -16,5 +18,5 @@ public class Constants {
             , OTHER_ITEMS = 1;
 
 
-
+    public static final String ACCESS_DENIED = "Access Denied!";
 }
