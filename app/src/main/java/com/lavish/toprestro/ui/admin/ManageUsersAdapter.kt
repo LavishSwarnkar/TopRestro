@@ -24,6 +24,8 @@ class ManageUsersAdapter(val type: String, val profiles : MutableList<Profile>
             profiles.remove(visibleProfiles[position])
             visibleProfiles.removeAt(position)
             notifyItemRemoved(position)
+
+            if(profiles.size == 0) showNoUsersView(false)
         }
     }
 
