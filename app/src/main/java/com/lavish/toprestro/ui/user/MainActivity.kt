@@ -116,6 +116,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.logout){
+            LogoutHelper()
+                    .logout(this)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
 }
