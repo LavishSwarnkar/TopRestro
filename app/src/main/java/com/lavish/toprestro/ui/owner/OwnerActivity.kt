@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
@@ -21,6 +22,7 @@ import com.lavish.toprestro.dialogs.NewRestaurantDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.owner.NewReviewsFetcher
 import com.lavish.toprestro.models.Review
+import com.lavish.toprestro.other.Constants
 import com.lavish.toprestro.other.LogoutHelper
 
 class OwnerActivity : AppCompatActivity() {
@@ -54,10 +56,26 @@ class OwnerActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: String) {
-                        app.hideLoadingDialog()
-                        ErrorDialog(this@OwnerActivity).show(e)
+                        if(e == Constants.ACCESS_DENIED) {
+                            onAccessDenied()
+                        } else {
+                            app.hideLoadingDialog()
+                            ErrorDialog(this@OwnerActivity).show(e)
+                        }
                     }
                 })
+    }
+
+    private fun onAccessDenied() {
+        MaterialAlertDialogBuilder(this)
+                .setCancelable(false)
+                .setTitle("Access Denied!")
+                .setMessage("Your account has been deleted. You have been logged out!")
+                .setPositiveButton("OKAY") { dialog, _ ->
+                    dialog.dismiss()
+                    LogoutHelper().logout(this)
+                }.show()
+
     }
 
     private fun setupHandlerForImagePicker() {

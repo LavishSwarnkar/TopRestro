@@ -1,9 +1,11 @@
 package com.lavish.toprestro.firebaseHelpers.owner
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.models.Review
+import com.lavish.toprestro.other.Constants
 
 class NewReviewsFetcher() {
 
@@ -28,7 +30,11 @@ class NewReviewsFetcher() {
                     listener.onResult(reviews)
                 }
                 .addOnFailureListener {
-                    listener.onError(it.toString())
+                    //Permission denied
+                    if(it is FirebaseFirestoreException && it.code.value() == 7)
+                        listener.onError(Constants.ACCESS_DENIED)
+                    else
+                        listener.onError(it.toString())
                 }
     }
 

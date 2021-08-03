@@ -11,11 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRestro">
         <activity android:name=".ui.admin.ManageUsersActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.admin.AdminActivity"/>
-        <activity android:name=".ui.admin.AdminActivity" />
+        <activity android:name=".ui.admin.AdminActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.owner.OwnerActivity"
-            android:label="TopRestro Owner" />
+            android:label="TopRestro Owner"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.common.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -25,11 +28,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.common.LoginActivity" />
-        <activity android:name=".ui.user.MainActivity" />
+        <activity android:name=".ui.common.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.user.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.user.reviews.UserRestroActivity"
-            android:parentActivityName=".ui.user.MainActivity" />
+            android:parentActivityName=".ui.user.MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
