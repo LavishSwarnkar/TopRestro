@@ -26,9 +26,10 @@ class ManageRestroAdapter(
     }
 
     override fun onBindViewHolder(holder: RestroViewHolder, position: Int) {
-        holder.bind(visibleRestaurants[position]) {
-            restaurants.remove(visibleRestaurants[position])
-            visibleRestaurants.removeAt(position)
+        val restaurant = visibleRestaurants[position]
+        holder.bind(restaurant) {
+            restaurants.remove(restaurant)
+            visibleRestaurants.remove(restaurant)
             notifyItemRemoved(position)
 
             //No users

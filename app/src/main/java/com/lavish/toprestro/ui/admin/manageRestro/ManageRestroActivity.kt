@@ -51,7 +51,10 @@ class ManageRestroActivity : AppCompatActivity() {
                 .fetch(object : OnCompleteListener<MutableList<Restaurant>> {
                     override fun onResult(t: MutableList<Restaurant>) {
                         app.hideLoadingDialog()
-                        setupAdapter(t.toMutableList())
+                        val restros = t.sortedWith (
+                            compareBy { it.name }
+                        )
+                        setupAdapter(restros.toMutableList())
                     }
 
                     override fun onError(e: String) {

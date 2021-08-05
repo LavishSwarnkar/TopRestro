@@ -1,6 +1,7 @@
 package com.lavish.toprestro.ui.owner
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -17,6 +18,9 @@ class OwnerHeaderViewHolder(val b: HeaderOwnerActivityBinding) : RecyclerView.Vi
         //Get saved restaurants
         val restaurants = Prefs(b.root.context).getRestros()
 
+        Log.e("MeraTag", "bind: $restaurants", )
+
+        b.restaurantsList.removeAllViews()
         inflateRestaurantCards(restaurants)
         setupNewRestaurantsHandler()
 

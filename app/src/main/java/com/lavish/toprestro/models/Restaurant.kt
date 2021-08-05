@@ -10,4 +10,9 @@ data class Restaurant(
 
     constructor() : this(name = null)
 
+    override fun toString(): String {
+        return "Restaurant(name=$name)"
+    }
+
+
 }
