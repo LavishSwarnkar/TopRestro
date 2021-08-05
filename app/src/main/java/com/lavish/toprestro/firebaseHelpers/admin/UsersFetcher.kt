@@ -4,6 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
+import java.util.*
 
 class UsersFetcher {
 
@@ -11,13 +12,15 @@ class UsersFetcher {
         FirebaseFirestore.getInstance()
                 .collection(type)
                 .get()
-                .addOnSuccessListener {
+                .addOnSuccessListener { it ->
                     val profiles = mutableListOf<Profile>()
 
                     it.documents.forEach { doc ->
                         if(doc != null && doc.exists())
                             profiles.add(doc.toObject(Profile::class.java)!!)
                     }
+
+                    profiles.sortWith { o1, o2 -> o1!!.name!!.compareTo(o2!!.name!!) }
 
                     listener.onResult(profiles)
                 }

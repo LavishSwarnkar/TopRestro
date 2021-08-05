@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.lavish.toprestro.App
-import com.lavish.toprestro.databinding.ActivityUserRestroBinding
+import com.lavish.toprestro.databinding.ActivityRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.user.ReviewsFetcher
@@ -15,18 +15,19 @@ import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
 import com.lavish.toprestro.other.Constants
 
-class UserRestroActivity : AppCompatActivity() {
+class RestroActivity : AppCompatActivity() {
 
     lateinit var adapter: ReviewsAdapter
     lateinit var reviews: MutableList<Review>
     private lateinit var app: App
     lateinit var restaurant: Restaurant
-    lateinit var b: ActivityUserRestroBinding
+    lateinit var b: ActivityRestroBinding
+    var isEditMode: Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        b = ActivityUserRestroBinding.inflate(layoutInflater)
+        b = ActivityRestroBinding.inflate(layoutInflater)
         setContentView(b.root)
         app = application as App
 
@@ -36,6 +37,7 @@ class UserRestroActivity : AppCompatActivity() {
 
     private fun getRestroInfo() {
         val restroStr : String = intent.extras!![Constants.RESTAURANT_INFO_KEY] as String
+        isEditMode = intent.extras!![Constants.EDIT_RESTAURANT] as Boolean
         restaurant = Gson().fromJson(restroStr, Restaurant::class.java)
 
         //Set title
@@ -56,7 +58,7 @@ class UserRestroActivity : AppCompatActivity() {
                     override fun onError(e: String) {
                         app.hideLoadingDialog()
                         reviews = mutableListOf()
-                        ErrorDialog(this@UserRestroActivity).show(e)
+                        ErrorDialog(this@RestroActivity).show(e)
                     }
                 })
     }
@@ -72,7 +74,7 @@ class UserRestroActivity : AppCompatActivity() {
             }
         }
 
-        adapter = ReviewsAdapter(this, restaurant, reviews, isRateReviewDone)
+        adapter = ReviewsAdapter(this, restaurant, reviews, isRateReviewDone, isEditMode ?: false)
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)

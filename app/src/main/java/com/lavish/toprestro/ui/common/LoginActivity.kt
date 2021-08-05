@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                         app!!.hideLoadingDialog()
 
                         if(e == ACCESS_DENIED){
-                            LogoutHelper().logout(this@LoginActivity)
+                            LogoutHelper().logout(this@LoginActivity, navigate = false)
                             ErrorDialog(this@LoginActivity).show(e)
                             return
                         }

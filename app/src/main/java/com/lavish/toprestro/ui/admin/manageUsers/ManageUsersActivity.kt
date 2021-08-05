@@ -1,4 +1,4 @@
-package com.lavish.toprestro.ui.admin
+package com.lavish.toprestro.ui.admin.manageUsers
 
 import android.os.Bundle
 import android.view.Menu
@@ -19,7 +19,6 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.UsersFetcher
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.other.Constants.*
-import com.lavish.toprestro.ui.user.reviews.ReviewsAdapter
 
 class ManageUsersActivity : AppCompatActivity() {
 

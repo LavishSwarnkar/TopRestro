@@ -2,8 +2,10 @@ package com.lavish.toprestro.dialogs
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.R
@@ -15,9 +17,7 @@ class TextInputDialog(val context: Context) {
     lateinit var b: DialogTextInputBinding
     lateinit var listener: OnInputCompleteListener
 
-    fun takeInput(title: String, icon: Int, inputHint: String, type: Int, buttonText: String
-                  , cancellable: Boolean
-                  , listener: OnInputCompleteListener) {
+    fun takeInput(title: String, icon: Int, inputHint: String, type: Int, buttonText: String, cancellable: Boolean, prefill: String = "", listener: OnInputCompleteListener) {
 
         this.listener = listener
 
@@ -30,12 +30,20 @@ class TextInputDialog(val context: Context) {
 
         //EditText
         b.editText.hint = inputHint
+        b.editText.editText!!.setText(prefill)
         b.editText.editText?.apply {
-            inputType = type
+
+            if(type == EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE){
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE
+                isSingleLine = false
+            } else
+                inputType = type
+
             addTextChangedListener(object : TextWatcher {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     validateInput()
                 }
+
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun afterTextChanged(s: Editable) {}
             })

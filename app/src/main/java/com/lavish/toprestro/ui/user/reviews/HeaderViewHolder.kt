@@ -1,7 +1,9 @@
 package com.lavish.toprestro.ui.user.reviews
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.View.GONE
@@ -20,6 +22,8 @@ import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
 
 class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.ViewHolder(b.root){
+
+    //3.5, 10 -> 4 =>
 
     private var noOfReviews: Int = 0
     private lateinit var restaurant: Restaurant
@@ -61,6 +65,16 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
     private fun showRating() {
         b.rating.apply {
+            backgroundTintList = (ColorStateList.valueOf(
+                    when {
+                        restaurant.avgRating > 4 -> Color.parseColor("#10C300")
+                        restaurant.avgRating > 3 -> Color.parseColor("#82C300")
+                        restaurant.avgRating > 2 -> Color.parseColor("#C3A300")
+                        restaurant.avgRating >= 1 -> Color.parseColor("#C36800")
+                        else -> Color.parseColor("#C36800")
+                    }
+            ))
+
             if (restaurant.noOfRatings > 0){
                 text = "${String.format("%.1f", restaurant.avgRating)} ★"
                 visibility = View.VISIBLE
@@ -107,8 +121,11 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
                     }
                 }
 
+                //3.5, 10 + 4 = 39/11
+                //7.5/11
+
                 restaurant.noOfRatings++
-                restaurant.avgRating = (restaurant.avgRating + rating)/restaurant.noOfRatings
+                restaurant.avgRating = (restaurant.avgRating * (restaurant.noOfRatings-1) + rating) / restaurant.noOfRatings
 
                 NewReviewHelper()
                         .saveNewReview(restaurant.id!!, restaurant.avgRating, review, listener)
@@ -118,7 +135,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
     private fun onReviewDone(review: Review) {
         b.rateReviewRoot.visibility = GONE
-        (b.root.context as UserRestroActivity).showNewReview(restaurant, review)
+        (b.root.context as RestroActivity).showNewReview(restaurant, review)
     }
 
     private fun handleReviewsVisibility() {
@@ -133,7 +150,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
 }
 
-private fun UserRestroActivity.showNewReview(restaurant: Restaurant, review: Review) {
+private fun RestroActivity.showNewReview(restaurant: Restaurant, review: Review) {
     reviews.add(0, review)
     adapter.notifyItemInserted(1)
     (applicationContext as App).updatedRestro = restaurant

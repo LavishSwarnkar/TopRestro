@@ -1,4 +1,4 @@
-package com.lavish.toprestro.ui.admin
+package com.lavish.toprestro.ui.admin.manageUsers
 
 import androidx.recyclerview.widget.RecyclerView
 import com.lavish.toprestro.App

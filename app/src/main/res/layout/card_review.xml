@@ -58,7 +58,7 @@
         android:id="@+id/replyGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="divider,replyArrow,replyTv"
         tools:visibility="visible" />
 
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="#ccc"
+        android:background="#ddd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewTv" />
@@ -100,16 +100,16 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
         android:src="@drawable/ic_reply"
         android:tooltipText="Reply"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editBtn"
         app:layout_constraintTop_toBottomOf="@+id/replyTv"
         app:tint="@color/colorPrimary"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/editBtn"
@@ -123,7 +123,7 @@
         android:src="@drawable/ic_edit"
         android:tooltipText="Edit"
         app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-        app:layout_constraintTop_toBottomOf="@+id/newRestaurantBtn"
+        app:layout_constraintTop_toBottomOf="@+id/replyTv"
         app:tint="@color/colorPrimary" />
 
     <ImageButton
@@ -138,7 +138,7 @@
         android:src="@drawable/ic_delete"
         android:tooltipText="Delete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newRestaurantBtn"
+        app:layout_constraintTop_toBottomOf="@+id/replyTv"
         app:tint="@color/red" />
 
     <androidx.constraintlayout.widget.Group

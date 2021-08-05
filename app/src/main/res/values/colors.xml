@@ -11,4 +11,10 @@
     <color name="green">#10C300</color>
     <color name="light_bg">#126200EE</color>
     <color name="review_card_bg">#F7F2FE</color>
+
+    <color name="five_stars">#10C300</color>
+    <color name="four_stars">#82C300</color>
+    <color name="three_stars">#A6C300</color>
+    <color name="two_stars">#C3A300</color>
+    <color name="one_star">#C36800</color>
 </resources>

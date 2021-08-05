@@ -73,6 +73,6 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
         TextInputDialog(b.root.context)
                 .takeInput("Reply", R.drawable.ic_reply, "Reply"
                         , EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE, "SEND", true
-                        , inputListener)
+                        , listener = inputListener)
     }
 }

@@ -6,10 +6,16 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 
 class ReviewActionsHelper {
 
-    fun deleteReview(restaurantId: String, reviewId: String, listener: OnCompleteListener<Void?>){
-        FirebaseFirestore.getInstance()
-                .document("restaurants/$restaurantId/reviews/$reviewId")
-                .delete()
+    fun deleteReview(restaurantId: String, reviewId: String, newAvgRating: Float, listener: OnCompleteListener<Void?>){
+        val db = FirebaseFirestore.getInstance()
+        val batch = db.batch()
+
+        batch.delete(db.document("restaurants/$restaurantId/reviews/$reviewId"))
+        batch.update(db.document("restaurants/$restaurantId"),
+        mapOf("noOfRatings" to FieldValue.increment(-1),
+                "avgRating" to newAvgRating))
+
+        batch.commit()
                 .addOnSuccessListener {
                     listener.onResult(null)
                 }
@@ -24,7 +30,6 @@ class ReviewActionsHelper {
     }
 
     fun editReview(restaurantId: String, reviewId: String, newReview: String, listener: OnCompleteListener<Void?>){
-        //TODO : Remove rating from restro doc
         val map = mapOf<String, Any>("review" to newReview)
         editReview(restaurantId, reviewId, map, listener)
     }

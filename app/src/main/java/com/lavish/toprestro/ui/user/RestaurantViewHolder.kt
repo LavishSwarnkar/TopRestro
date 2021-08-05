@@ -2,7 +2,9 @@ package com.lavish.toprestro.ui.user
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View.*
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.gson.Gson
-import com.lavish.toprestro.ui.user.reviews.UserRestroActivity
+import com.lavish.toprestro.ui.user.reviews.RestroActivity
 import com.lavish.toprestro.databinding.CardUserRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
@@ -28,8 +30,17 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
         b.name.text = restaurant.name
 
         //Rating
-        //TODO : Color
         b.rating.apply {
+            backgroundTintList = (ColorStateList.valueOf(
+                    when {
+                        restaurant.avgRating > 4 -> Color.parseColor("#10C300")
+                        restaurant.avgRating > 3 -> Color.parseColor("#82C300")
+                        restaurant.avgRating > 2 -> Color.parseColor("#C3A300")
+                        restaurant.avgRating >= 1 -> Color.parseColor("#C36800")
+                        else -> Color.parseColor("#C36800")
+                    }
+            ))
+
             if (restaurant.noOfRatings > 0){
                 text = "${String.format("%.1f", restaurant.avgRating)} ★"
                 visibility = VISIBLE
@@ -72,7 +83,8 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
 }
 
 private fun MainActivity.openRestaurant(restaurant: Restaurant) {
-    val intent = Intent(this, UserRestroActivity::class.java)
+    val intent = Intent(this, RestroActivity::class.java)
     intent.putExtra(Constants.RESTAURANT_INFO_KEY, Gson().toJson(restaurant))
+    intent.putExtra(Constants.EDIT_RESTAURANT, false)
     startActivity(intent)
 }

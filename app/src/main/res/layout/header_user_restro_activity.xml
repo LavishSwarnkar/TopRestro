@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.user.reviews.UserRestroActivity">
+    tools:context=".ui.user.reviews.RestroActivity">
 
     <FrameLayout
         android:id="@+id/bannerRoot"
@@ -141,7 +141,7 @@
         android:padding="32dp"
         android:background="@drawable/bg_review_card"
         android:layout_height="wrap_content"
-        android:text="Be the first one to review this restaurant!"
+        android:text="No reviews found!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rateReviewRoot"

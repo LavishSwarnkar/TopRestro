@@ -36,9 +36,8 @@
             android:tooltipText="Edit reviews"
             app:tint="@color/colorPrimary" />
 
-        <ImageButton
+        <ImageButton android:id="@+id/deleteBtn"
             android:visibility="gone"
-            android:id="@+id/deleteBtn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="30dp"
             android:layout_height="30dp"

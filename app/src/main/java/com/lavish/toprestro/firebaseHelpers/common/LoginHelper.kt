@@ -50,25 +50,6 @@ class LoginHelper(val context: Context) {
                                     })
                         }
 
-                        //Check for Admin
-                        else if(type == TYPE_ADMIN){
-                            AdminHelper()
-                                    .checkIfAdmin(emailId, object : OnCompleteListener<Profile?> {
-                                        override fun onResult(t: Profile?) {
-                                            if(profile == null)
-                                                this@LoginHelper.listener.onError(Constants.ACCESS_DENIED)
-                                            else {
-                                                saveProfile(t, type)
-                                                this@LoginHelper.listener.onResult(t!!.name!!)
-                                            }
-                                        }
-
-                                        override fun onError(e: String) {
-                                            this@LoginHelper.listener.onError(e)
-                                        }
-                                    })
-                        }
-
                         //Done!
                         else {
                             this@LoginHelper.listener.onResult(profile!!.name!!)
@@ -77,6 +58,11 @@ class LoginHelper(val context: Context) {
 
                     //New user
                     else {
+                        if(type == TYPE_ADMIN){
+                            listener.onError(Constants.ACCESS_DENIED)
+                            return@addOnSuccessListener
+                        }
+
                         inputName()
                     }
                 }
@@ -88,6 +74,7 @@ class LoginHelper(val context: Context) {
     private fun saveProfile(profile: Profile?, type: String) {
         Prefs(context).saveProfile(profile, type)
         (context.applicationContext as App).profile = profile
+        (context.applicationContext as App).loggedInAs = type
     }
 
     private fun inputName() {
@@ -98,7 +85,7 @@ class LoginHelper(val context: Context) {
         }
 
         TextInputDialog(context)
-                .takeInput("Create new account", R.drawable.ic_account, "Name", EditorInfo.TYPE_TEXT_FLAG_CAP_WORDS, "Enter", false, listener)
+                .takeInput("Create new account", R.drawable.ic_account, "Name", EditorInfo.TYPE_TEXT_FLAG_CAP_WORDS, "Enter", false, listener =  listener)
     }
 
     private fun createAccount(name: String) {

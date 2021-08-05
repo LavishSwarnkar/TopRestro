@@ -1,10 +1,13 @@
-package com.lavish.toprestro.ui.admin
+package com.lavish.toprestro.ui.admin.manageUsers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.databinding.CardUserBinding
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.Constants.TYPE_ADMIN
+import com.lavish.toprestro.other.LogoutHelper
 
 class ManageUsersAdapter(val type: String, val profiles : MutableList<Profile>
         , val showNoUsersView : (Boolean) -> Unit)
@@ -21,11 +24,20 @@ class ManageUsersAdapter(val type: String, val profiles : MutableList<Profile>
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
         holder.bind(visibleProfiles[position]) {
+            //Admin delete self
+            if(visibleProfiles[position].emailId == FirebaseAuth.getInstance().currentUser!!.email
+                    && type == TYPE_ADMIN){
+                LogoutHelper().logout(holder.b.root.context)
+                return@bind
+            }
+
+            //Remove finally
             profiles.remove(visibleProfiles[position])
             visibleProfiles.removeAt(position)
             notifyItemRemoved(position)
 
-            if(profiles.size == 0) showNoUsersView(false)
+            //No users
+            if(profiles.size == 0) showNoUsersView(true)
         }
     }
 
