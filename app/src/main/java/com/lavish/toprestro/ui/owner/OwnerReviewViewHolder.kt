@@ -1,6 +1,8 @@
 package com.lavish.toprestro.ui.owner
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.View.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -22,9 +24,21 @@ class OwnerReviewViewHolder(private val b: CardReviewBinding)
     fun bind(review: Review) {
         //Basic
         b.userNameTv.text = review.userName
-        b.dateTv.text = review.formattedDate()
-        b.ratingBar.rating = review.starRating!!.toFloat()
+        b.dateTv.text = "${review.formattedDate()} (${review.restroName})"
         b.reviewTv.text = review.review
+
+        //RatingBar
+        b.ratingBar.rating = review.starRating!!.toFloat()
+        b.ratingBar.progressTintList = (ColorStateList.valueOf(
+                when {
+                    review.starRating!! > 4 -> Color.parseColor("#10C300")
+                    review.starRating!! > 3 -> Color.parseColor("#82C300")
+                    review.starRating!! > 2 -> Color.parseColor("#C3A300")
+                    review.starRating!! >= 1 -> Color.parseColor("#C36800")
+                    else -> Color.parseColor("#C36800")
+                }
+        ))
+        b.ratingBar.progressBackgroundTintList = b.ratingBar.progressTintList
 
         //Reply
         if(review.reply == null){

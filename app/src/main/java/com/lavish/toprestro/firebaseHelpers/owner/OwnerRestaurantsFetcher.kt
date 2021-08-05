@@ -14,7 +14,7 @@ class OwnerRestaurantsFetcher(val context: Context) {
                 .whereEqualTo("ownerEmail", ownerEmail)
                 .get()
                 .addOnSuccessListener {
-                    val restaurants = mutableListOf<Restaurant>()
+                    var restaurants = mutableListOf<Restaurant>()
 
                     it.documents.forEach { doc ->
                         if(doc != null && doc.exists()){
@@ -23,6 +23,10 @@ class OwnerRestaurantsFetcher(val context: Context) {
                             restaurants.add(restaurant)
                         }
                     }
+
+                    restaurants = restaurants.sortedWith(
+                        compareBy { it.name }
+                    ).toMutableList()
 
                     //save Restaurants locally
                     Prefs(context).saveRestros(restaurants)

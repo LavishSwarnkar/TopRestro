@@ -26,6 +26,7 @@ import com.lavish.toprestro.other.Constants
 import com.lavish.toprestro.other.LogoutHelper
 
 class MainActivity : AppCompatActivity() {
+
     var restros: MutableList<Restaurant>? = null
     private lateinit var app: App
     private lateinit var adapter: RestaurantsAdapter
@@ -111,6 +112,13 @@ class MainActivity : AppCompatActivity() {
                 if(restaurant.id == updatedRestro.id){
                     restros!!.removeAt(i)
                     restros!!.add(i, updatedRestro)
+
+                    restros = restros!!.sortedWith { o1, o2 ->
+                        if (o2.avgRating == o1.avgRating)
+                            return@sortedWith o1.name!!.compareTo(o2.name!!)
+                        o2.avgRating.compareTo(o1.avgRating)
+                    }.toMutableList()
+
                     setupAdapter(restros!!)
 
                     app.updatedRestro = null

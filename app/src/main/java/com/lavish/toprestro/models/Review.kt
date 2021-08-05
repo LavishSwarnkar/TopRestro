@@ -14,7 +14,8 @@ data class Review(var id: String? = null,
 
         var starRating: Float? = 0f,
         var review: String? = null,
-        var reply: String? = null) {
+        var reply: String? = null,
+        var restroName: String? = null) {
 
     constructor() : this(userName = null)
 

@@ -24,8 +24,10 @@ class AllRestaurantsFetcher() {
                         }
                     }
 
-                    restaurants = restaurants.sortedWith {
-                        o1, o2 -> o2!!.avgRating.compareTo(o1!!.avgRating)
+                    restaurants = restaurants.sortedWith { o1, o2 ->
+                        if (o2.avgRating == o1.avgRating)
+                            return@sortedWith o1.name!!.compareTo(o2.name!!)
+                        o2.avgRating.compareTo(o1.avgRating)
                     }.toMutableList()
 
                     listener.onResult(restaurants)

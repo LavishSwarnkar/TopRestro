@@ -102,6 +102,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
                 val review = Review(userName = profile!!.name,
                         userEmail = profile.emailId,
                         restaurantId = restaurant.id!!,
+                        restroName = restaurant.name,
                         ownerEmail = restaurant.ownerEmail,
                         starRating = rating,
                         review = reviewStr)
