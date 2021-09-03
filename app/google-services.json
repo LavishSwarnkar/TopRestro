@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "645070203948-1005ji3gqlho8oi24ajml6f8aon5egbl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lavish.toprestro",
+            "certificate_hash": "84d40d27a8017acd92ac1be78f88383b9675652c"
+          }
+        },
+        {
           "client_id": "645070203948-b7nhqmuo5t0ublpf0fbpgjt9rfmovvha.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

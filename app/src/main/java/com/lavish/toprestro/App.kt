@@ -22,6 +22,7 @@ class App : Application() {
     var loggedInAs: String? = null
 
     private var dialog: Dialog? = null
+
     override fun onCreate() {
         super.onCreate()
         init()

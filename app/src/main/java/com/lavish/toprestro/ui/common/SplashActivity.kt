@@ -17,17 +17,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /*AdminHelper()
-                .createAdmin(Profile("Lavish Swarnkar", "lavishswarnkar@gmail.com"), object : OnCompleteListener<Void?> {
-                    override fun onResult(t: Void?) {
-                        Toast.makeText(this@SplashActivity, "Done!", Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onError(e: String) {
-                        Toast.makeText(this@SplashActivity, e, Toast.LENGTH_SHORT).show()
-                    }
-                })*/
-
         val app = applicationContext as App
 
         if (app.isLoggedIn) {

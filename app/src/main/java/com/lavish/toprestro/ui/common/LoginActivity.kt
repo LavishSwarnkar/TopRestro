@@ -23,8 +23,10 @@ import com.lavish.toprestro.other.LogoutHelper
 import com.lavish.toprestro.ui.admin.AdminActivity
 
 class LoginActivity : AppCompatActivity() {
+
     private var userType: String? = null
     private var app: App? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
