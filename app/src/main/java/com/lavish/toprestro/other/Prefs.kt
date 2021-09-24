@@ -3,8 +3,8 @@ package com.lavish.toprestro.other
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.lavish.toprestro.App
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant

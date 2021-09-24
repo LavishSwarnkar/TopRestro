@@ -12,15 +12,13 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
-import com.lavish.toprestro.ui.owner.OwnerActivity
-import com.lavish.toprestro.ui.user.MainActivity
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.common.LoginHelper
-import com.lavish.toprestro.other.Constants
-import com.lavish.toprestro.other.Constants.*
-import com.lavish.toprestro.other.LogoutHelper
+import com.lavish.toprestro.other.*
 import com.lavish.toprestro.ui.admin.AdminActivity
+import com.lavish.toprestro.ui.owner.OwnerActivity
+import com.lavish.toprestro.ui.user.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -36,15 +34,15 @@ class LoginActivity : AppCompatActivity() {
     //Handle Button clicks ----------------------------------------------
 
     fun loginAsUser(view: View?) {
-        login(Constants.TYPE_USER)
+        login(TYPE_USER)
     }
 
     fun loginAsOwner(view: View?) {
-        login(Constants.TYPE_OWNER)
+        login(TYPE_OWNER)
     }
 
     fun loginAsAdmin(view: View?) {
-        login(Constants.TYPE_ADMIN)
+        login(TYPE_ADMIN)
     }
 
 

@@ -4,8 +4,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.user.ReviewsFetcher
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants.TYPE_OWNER
-import com.lavish.toprestro.other.Constants.TYPE_RESTAURANT
+import com.lavish.toprestro.other.TYPE_OWNER
+import com.lavish.toprestro.other.TYPE_RESTAURANT
 
 class DeleteHelper {
 

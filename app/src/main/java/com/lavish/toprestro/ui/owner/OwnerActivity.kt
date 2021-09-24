@@ -25,7 +25,7 @@ import com.lavish.toprestro.dialogs.NewRestaurantDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.owner.NewReviewsFetcher
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants
+import com.lavish.toprestro.other.ACCESS_DENIED
 import com.lavish.toprestro.other.LogoutHelper
 
 class OwnerActivity : AppCompatActivity() {
@@ -59,7 +59,7 @@ class OwnerActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: String) {
-                        if(e == Constants.ACCESS_DENIED) {
+                        if(e == ACCESS_DENIED) {
                             onAccessDenied()
                         } else {
                             app.hideLoadingDialog()

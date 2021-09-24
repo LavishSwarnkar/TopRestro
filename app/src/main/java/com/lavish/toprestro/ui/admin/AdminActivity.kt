@@ -16,7 +16,6 @@ import com.lavish.toprestro.databinding.ActivityAdminBinding
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
 import com.lavish.toprestro.models.Profile
-import com.lavish.toprestro.other.Constants.*
 import com.lavish.toprestro.other.LogoutHelper
 import com.lavish.toprestro.ui.admin.manageRestro.ManageRestroActivity
 import com.lavish.toprestro.ui.admin.manageUsers.ManageUsersActivity

@@ -16,7 +16,8 @@ import com.lavish.toprestro.ui.user.reviews.RestroActivity
 import com.lavish.toprestro.databinding.CardUserRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Constants
+import com.lavish.toprestro.other.EDIT_RESTAURANT
+import com.lavish.toprestro.other.RESTAURANT_INFO_KEY
 
 class RestaurantViewHolder(private val b: CardUserRestroBinding)
     : RecyclerView.ViewHolder(b.root) {
@@ -84,7 +85,7 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
 
 private fun MainActivity.openRestaurant(restaurant: Restaurant) {
     val intent = Intent(this, RestroActivity::class.java)
-    intent.putExtra(Constants.RESTAURANT_INFO_KEY, Gson().toJson(restaurant))
-    intent.putExtra(Constants.EDIT_RESTAURANT, false)
+    intent.putExtra(RESTAURANT_INFO_KEY, Gson().toJson(restaurant))
+    intent.putExtra(EDIT_RESTAURANT, false)
     startActivity(intent)
 }

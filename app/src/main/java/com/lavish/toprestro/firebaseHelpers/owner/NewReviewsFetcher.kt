@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants
+import com.lavish.toprestro.other.ACCESS_DENIED
 
 class NewReviewsFetcher() {
 
@@ -32,7 +32,7 @@ class NewReviewsFetcher() {
                 .addOnFailureListener {
                     //Permission denied
                     if(it is FirebaseFirestoreException && it.code.value() == 7)
-                        listener.onError(Constants.ACCESS_DENIED)
+                        listener.onError(ACCESS_DENIED)
                     else
                         listener.onError(it.toString())
                 }

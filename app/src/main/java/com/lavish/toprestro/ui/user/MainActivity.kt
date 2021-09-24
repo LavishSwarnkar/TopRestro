@@ -1,13 +1,10 @@
 package com.lavish.toprestro.ui.user
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -22,7 +19,7 @@ import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.common.AllRestaurantsFetcher
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Constants
+import com.lavish.toprestro.other.ACCESS_DENIED
 import com.lavish.toprestro.other.LogoutHelper
 
 class MainActivity : AppCompatActivity() {
@@ -53,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: String) {
-                        if(e == Constants.ACCESS_DENIED) {
+                        if(e == ACCESS_DENIED) {
                             onAccessDenied()
                         } else {
                             app.hideLoadingDialog()

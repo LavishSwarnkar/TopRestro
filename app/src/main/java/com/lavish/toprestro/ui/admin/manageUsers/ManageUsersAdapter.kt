@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.databinding.CardUserBinding
 import com.lavish.toprestro.models.Profile
-import com.lavish.toprestro.other.Constants.TYPE_ADMIN
+import com.lavish.toprestro.other.TYPE_ADMIN
 import com.lavish.toprestro.other.LogoutHelper
 
 class ManageUsersAdapter(val type: String, val profiles : MutableList<Profile>

@@ -13,7 +13,8 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.user.ReviewsFetcher
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants
+import com.lavish.toprestro.other.EDIT_RESTAURANT
+import com.lavish.toprestro.other.RESTAURANT_INFO_KEY
 
 class RestroActivity : AppCompatActivity() {
 
@@ -36,8 +37,8 @@ class RestroActivity : AppCompatActivity() {
     }
 
     private fun getRestroInfo() {
-        val restroStr : String = intent.extras!![Constants.RESTAURANT_INFO_KEY] as String
-        isEditMode = intent.extras!![Constants.EDIT_RESTAURANT] as Boolean
+        val restroStr : String = intent.extras!![RESTAURANT_INFO_KEY] as String
+        isEditMode = intent.extras!![EDIT_RESTAURANT] as Boolean
         restaurant = Gson().fromJson(restroStr, Restaurant::class.java)
 
         //Set title

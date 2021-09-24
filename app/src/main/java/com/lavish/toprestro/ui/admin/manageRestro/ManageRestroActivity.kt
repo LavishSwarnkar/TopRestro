@@ -3,7 +3,6 @@ package com.lavish.toprestro.ui.admin.manageRestro
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -14,13 +13,9 @@ import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.ActivityManageUsersBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
-import com.lavish.toprestro.dialogs.NewAdminDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.firebaseHelpers.admin.UsersFetcher
 import com.lavish.toprestro.firebaseHelpers.common.AllRestaurantsFetcher
-import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Constants.*
 
 class ManageRestroActivity : AppCompatActivity() {
 

@@ -8,8 +8,8 @@ import com.lavish.toprestro.databinding.CardReviewBinding
 import com.lavish.toprestro.databinding.HeaderUserRestroActivityBinding
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants.HEADER
-import com.lavish.toprestro.other.Constants.OTHER_ITEMS
+import com.lavish.toprestro.other.HEADER
+import com.lavish.toprestro.other.OTHER_ITEMS
 
 class ReviewsAdapter(val context: Context, val restaurant: Restaurant, val reviews: MutableList<Review>, val isRateReviewDone: Boolean, val isEditMode: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

@@ -2,16 +2,14 @@ package com.lavish.toprestro.ui.common
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lavish.toprestro.App
-import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
-import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.TYPE_ADMIN
+import com.lavish.toprestro.other.TYPE_OWNER
+import com.lavish.toprestro.other.TYPE_USER
+import com.lavish.toprestro.ui.admin.AdminActivity
 import com.lavish.toprestro.ui.owner.OwnerActivity
 import com.lavish.toprestro.ui.user.MainActivity
-import com.lavish.toprestro.other.Constants.*
-import com.lavish.toprestro.ui.admin.AdminActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

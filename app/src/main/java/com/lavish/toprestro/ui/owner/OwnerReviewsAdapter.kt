@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lavish.toprestro.databinding.CardReviewBinding
 import com.lavish.toprestro.databinding.HeaderOwnerActivityBinding
 import com.lavish.toprestro.models.Review
-import com.lavish.toprestro.other.Constants.HEADER
-import com.lavish.toprestro.other.Constants.OTHER_ITEMS
+import com.lavish.toprestro.other.HEADER
+import com.lavish.toprestro.other.OTHER_ITEMS
 
 class OwnerReviewsAdapter(val context: Context, val reviews: List<Review>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

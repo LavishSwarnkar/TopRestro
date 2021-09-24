@@ -8,13 +8,12 @@ import com.lavish.toprestro.R
 import com.lavish.toprestro.dialogs.OnInputCompleteListener
 import com.lavish.toprestro.dialogs.TextInputDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
 import com.lavish.toprestro.firebaseHelpers.owner.OwnerRestaurantsFetcher
 import com.lavish.toprestro.models.Profile
-import com.lavish.toprestro.other.Constants
-import com.lavish.toprestro.other.Constants.TYPE_ADMIN
-import com.lavish.toprestro.other.Constants.TYPE_OWNER
+import com.lavish.toprestro.other.ACCESS_DENIED
 import com.lavish.toprestro.other.Prefs
+import com.lavish.toprestro.other.TYPE_ADMIN
+import com.lavish.toprestro.other.TYPE_OWNER
 
 class LoginHelper(val context: Context) {
 
@@ -59,7 +58,7 @@ class LoginHelper(val context: Context) {
                     //New user
                     else {
                         if(type == TYPE_ADMIN){
-                            listener.onError(Constants.ACCESS_DENIED)
+                            listener.onError(ACCESS_DENIED)
                             return@addOnSuccessListener
                         }
 

@@ -3,12 +3,8 @@ package com.lavish.toprestro.ui.admin.manageRestro
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.databinding.CardRestroBinding
-import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Constants.TYPE_ADMIN
-import com.lavish.toprestro.other.LogoutHelper
 
 class ManageRestroAdapter(
         val restaurants: MutableList<Restaurant>,
