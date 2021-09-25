@@ -35,13 +35,7 @@
         </activity>
         <activity android:name=".ui.common.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.common.NewLoginActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".ui.user.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ui.user.reviews.RestroActivity"
-            android:parentActivityName=".ui.user.MainActivity"
             android:screenOrientation="portrait"/>
     </application>
 

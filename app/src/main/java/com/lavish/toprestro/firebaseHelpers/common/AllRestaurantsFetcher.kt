@@ -19,6 +19,7 @@ class AllRestaurantsFetcher() {
                         if(doc != null && doc.exists()){
                             val restaurant = doc.toObject(Restaurant::class.java)!!
                             restaurant.id = doc.id
+                            restaurant.rId = doc.id
                             restaurants.add(restaurant)
                         }
                     }

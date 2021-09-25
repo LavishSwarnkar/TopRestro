@@ -1,6 +1,5 @@
 package com.lavish.toprestro.ui.user.reviews
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,18 +10,18 @@ import com.lavish.toprestro.models.Review
 import com.lavish.toprestro.other.HEADER
 import com.lavish.toprestro.other.OTHER_ITEMS
 
-class ReviewsAdapter(val context: Context, val restaurant: Restaurant, val reviews: MutableList<Review>, val isRateReviewDone: Boolean, val isEditMode: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ReviewsAdapter(val restaurant: Restaurant, val reviews: MutableList<Review>, val isRateReviewDone: Boolean, val isEditMode: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if(viewType == HEADER)
             HeaderViewHolder(
                     HeaderUserRestroActivityBinding.inflate(
-                            LayoutInflater.from(context)
+                            LayoutInflater.from(parent.context)
                             , parent, false))
         else
             ReviewViewHolder(
                     CardReviewBinding.inflate(
-                            LayoutInflater.from(context)
+                            LayoutInflater.from(parent.context)
                             , parent
                             , false),
             )

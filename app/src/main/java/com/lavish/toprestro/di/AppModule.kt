@@ -1,29 +1,32 @@
 package com.lavish.toprestro.di
 
 import android.content.Context
-import com.lavish.toprestro.firebaseHelpers.common.LoginHelper
-import com.lavish.toprestro.other.NewPrefs
+import com.lavish.toprestro.data.RestaurantDao
+import com.lavish.toprestro.data.RestaurantDatabase
+import com.lavish.toprestro.other.NetworkStatusHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
 
-    @ActivityScoped
+
+
+    @Singleton
     @Provides
-    fun getPrefs(@ActivityContext context: Context): NewPrefs {
-        return NewPrefs(context)
+    fun getRestaurantsDao(@ApplicationContext context: Context): RestaurantDao {
+        return RestaurantDatabase.getDatabase(context = context).restaurantDao()
     }
 
-    @ActivityScoped
+    @Singleton
     @Provides
-    fun getLoginHelper(@ActivityContext context: Context): LoginHelper {
-        return LoginHelper()
+    fun getNetworkStatusHelper(@ApplicationContext context: Context): NetworkStatusHelper {
+        return NetworkStatusHelper(context)
     }
 
 }

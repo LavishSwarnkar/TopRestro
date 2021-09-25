@@ -136,7 +136,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
     private fun onReviewDone(review: Review) {
         b.rateReviewRoot.visibility = GONE
-        (b.root.context as RestroActivity).showNewReview(restaurant, review)
+        //TODO: (b.root.context as RestroActivity).showNewReview(restaurant, review)
     }
 
     private fun handleReviewsVisibility() {
@@ -151,10 +151,10 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
 }
 
-private fun RestroActivity.showNewReview(restaurant: Restaurant, review: Review) {
+/*TODO: private fun RestroActivity.showNewReview(restaurant: Restaurant, review: Review) {
     reviews.add(0, review)
     adapter.notifyItemInserted(1)
     (applicationContext as App).updatedRestro = restaurant
-}
+}*/
 
 

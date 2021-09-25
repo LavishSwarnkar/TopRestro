@@ -2,21 +2,16 @@ package com.lavish.toprestro.ui.admin.manageRestro
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.gson.Gson
 import com.lavish.toprestro.App
 import com.lavish.toprestro.databinding.CardRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.DeleteHelper
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.RESTAURANT_INFO_KEY
 import com.lavish.toprestro.other.TYPE_RESTAURANT
-import com.lavish.toprestro.other.EDIT_RESTAURANT
-import com.lavish.toprestro.ui.user.reviews.RestroActivity
 
 class RestroViewHolder(val b: CardRestroBinding)
     : RecyclerView.ViewHolder(b.root) {
@@ -38,10 +33,11 @@ class RestroViewHolder(val b: CardRestroBinding)
         b.deleteBtn.visibility = VISIBLE
 
         b.editBtn.setOnClickListener {
-            val intent = Intent(context, RestroActivity::class.java)
+            //TODO
+            /*val intent = Intent(context, RestroActivity::class.java)
             intent.putExtra(RESTAURANT_INFO_KEY, Gson().toJson(restaurant))
             intent.putExtra(EDIT_RESTAURANT, true)
-            context.startActivity(intent)
+            context.startActivity(intent)*/
         }
 
         b.deleteBtn.setOnClickListener {

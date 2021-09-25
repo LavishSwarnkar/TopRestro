@@ -3,8 +3,11 @@ package com.lavish.toprestro.ui.common
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.GoogleBuilder
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -13,26 +16,39 @@ import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.dialogs.ErrorDialog
+import com.lavish.toprestro.dialogs.OnInputCompleteListener
+import com.lavish.toprestro.dialogs.TextInputDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.firebaseHelpers.common.LoginHelper
 import com.lavish.toprestro.other.*
 import com.lavish.toprestro.ui.admin.AdminActivity
 import com.lavish.toprestro.ui.owner.OwnerActivity
 import com.lavish.toprestro.ui.user.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var loginHelper: LoginHelper
+    lateinit var prefs: NewPrefs
+
+    /*@Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory*/
+
+    val loginViewModel: LoginViewModel by viewModels()
 
     private var userType: String? = null
     private var app: App? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //loginViewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+
         setContentView(R.layout.activity_login)
         app = applicationContext as App
     }
@@ -85,7 +101,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun postLogin(emailId: String?) {
-        loginHelper
+        observeLoginEvents()
+
+        loginViewModel
                 .postLogin(emailId!!, userType!!, object : OnCompleteListener<String> {
                     override fun onResult(name: String) {
                         app!!.hideLoadingDialog()
@@ -116,5 +134,27 @@ class LoginActivity : AppCompatActivity() {
                         )
                     }
                 })
+    }
+
+    private fun observeLoginEvents() {
+        lifecycleScope.launch {
+            loginViewModel.loginHelperEvents.collect {
+                when(it) {
+                    is LoginHelperEvents.SaveProfile -> {
+                        prefs.saveProfile(it.profile, it.type)
+                    }
+                    is LoginHelperEvents.InputName -> {
+                        val listener = object : OnInputCompleteListener {
+                            override fun onSubmit(input: String) {
+                                loginViewModel.createAccount(input)
+                            }
+                        }
+
+                        TextInputDialog(this@LoginActivity)
+                            .takeInput("Create new account", R.drawable.ic_account, "Name", EditorInfo.TYPE_TEXT_FLAG_CAP_WORDS, "Enter", false, listener =  listener)
+                    }
+                }
+            }
+        }
     }
 }

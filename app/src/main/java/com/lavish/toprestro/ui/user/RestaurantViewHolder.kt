@@ -1,23 +1,20 @@
 package com.lavish.toprestro.ui.user
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.gson.Gson
-import com.lavish.toprestro.ui.user.reviews.RestroActivity
 import com.lavish.toprestro.databinding.CardUserRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.EDIT_RESTAURANT
-import com.lavish.toprestro.other.RESTAURANT_INFO_KEY
 
 class RestaurantViewHolder(private val b: CardUserRestroBinding)
     : RecyclerView.ViewHolder(b.root) {
@@ -52,7 +49,9 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
 
         //OnClickHandler
         b.root.setOnClickListener {
-            (b.root.context as MainActivity).openRestaurant(restaurant)
+            RestroListFragmentDirections.actionRestroListFragmentToUserRestroFragment(
+                Gson().toJson(restaurant)
+            )
         }
     }
 
@@ -81,11 +80,4 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
                     }
                 })
     }
-}
-
-private fun MainActivity.openRestaurant(restaurant: Restaurant) {
-    val intent = Intent(this, RestroActivity::class.java)
-    intent.putExtra(RESTAURANT_INFO_KEY, Gson().toJson(restaurant))
-    intent.putExtra(EDIT_RESTAURANT, false)
-    startActivity(intent)
 }

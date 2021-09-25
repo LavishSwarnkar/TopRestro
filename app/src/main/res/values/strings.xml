@@ -4,4 +4,5 @@
     <string name="error_fetch_profile">\"Something went wrong while etching account details : \"</string>
     <string name="welcome">Welcome %s!</string>
     <string name="min_stars">Min. Stars : </string>
+    <string name="retry">Retry</string>
 </resources>

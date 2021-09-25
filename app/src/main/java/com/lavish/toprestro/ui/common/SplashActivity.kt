@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
             when(loginStatus) {
                 is NotLoggedIn -> {
-                    startActivity(Intent(this@SplashActivity, NewLoginActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 }
                 is LoggedIn -> {
                     val loggedInAs = (loginStatus as LoggedIn).loggedInAs

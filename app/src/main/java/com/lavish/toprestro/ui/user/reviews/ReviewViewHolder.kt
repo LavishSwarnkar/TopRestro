@@ -177,8 +177,8 @@ class ReviewViewHolder(private val b: CardReviewBinding)
 
                 app.showLoadingDialog(context)
                 when(what){
-                    "Review" -> ReviewActionsHelper().editReview(restaurant.id, review.id!!, input, listener)
-                    "Reply" -> ReviewActionsHelper().editReply(restaurant.id, review.id!!, input, listener)
+                    "Review" -> ReviewActionsHelper().editReview(restaurant.id!!, review.id!!, input, listener)
+                    "Reply" -> ReviewActionsHelper().editReply(restaurant.id!!, review.id!!, input, listener)
                 }
             }
         })

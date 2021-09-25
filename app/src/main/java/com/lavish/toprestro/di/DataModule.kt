@@ -1,8 +1,7 @@
 package com.lavish.toprestro.di
 
 import android.content.Context
-import com.lavish.toprestro.data.RestaurantDao
-import com.lavish.toprestro.data.RestaurantDatabase
+import com.lavish.toprestro.other.NewPrefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,12 +11,12 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class AnotherAppModule {
+class DataModule {
 
     @Singleton
     @Provides
-    fun getRestaurantsDao(@ApplicationContext context: Context): RestaurantDao {
-        return RestaurantDatabase.getDatabase(context = context).restaurantDao()
+    fun getPrefs(@ApplicationContext context: Context): NewPrefs {
+        return NewPrefs(context)
     }
 
 }

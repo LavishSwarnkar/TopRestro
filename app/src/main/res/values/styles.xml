@@ -37,6 +37,10 @@
         <item name="shapeAppearance">@style/RoundedButton.SmallComponent</item>
     </style>
 
+    <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/RoundedButton.SmallComponent</item>
+    </style>
+
     <style name="RoundedButton.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">24dp</item>
