@@ -12,9 +12,9 @@ class NetworkStatusHelper(val context: Context) {
         val caps = cm.getNetworkCapabilities(currentNetwork)
 
         caps?.let {
-            return it.hasCapability(NET_CAPABILITY_VALIDATED)
+            return !it.hasCapability(NET_CAPABILITY_VALIDATED)
         }
-        return false
+        return true
     }
 
 }

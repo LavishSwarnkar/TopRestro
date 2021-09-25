@@ -15,13 +15,13 @@
     <fragment
         android:id="@+id/userRestroFragment"
         android:name="com.lavish.toprestro.ui.user.UserRestroFragment"
-        android:label="UserRestroFragment" >
+        android:label="Restaurant">
         <argument
             android:name="restaurant"
             app:argType="string" />
         <argument
             android:name="isEditMode"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 </navigation>

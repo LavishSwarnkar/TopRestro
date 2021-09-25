@@ -2,6 +2,7 @@ package com.lavish.toprestro.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.R
@@ -35,6 +36,7 @@ class ErrorDialog(val context: Context) {
             b.posBtn.setOnClickListener { retryCallback() }
 
             //Close button
+            b.negBtn.visibility = VISIBLE
             b.negBtn.setOnClickListener { closeCallback() }
 
             dialog = dialogBuilder.setCancelable(false).show()

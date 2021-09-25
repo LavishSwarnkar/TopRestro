@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -66,7 +67,7 @@ class UserRestroFragment: Fragment() {
         restaurant = Gson().fromJson(restroStr, Restaurant::class.java)
 
         //Set title
-        activity?.title = restaurant.name
+        (activity as AppCompatActivity).supportActionBar?.title = restaurant.name
     }
 
     private suspend fun fetchReviews() {

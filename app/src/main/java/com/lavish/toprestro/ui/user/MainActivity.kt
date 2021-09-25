@@ -1,9 +1,6 @@
 package com.lavish.toprestro.ui.user
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -71,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     //Double tap to Exit
 
-    private var doubleBackToExitPressedOnce = false
+    /*private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
@@ -82,6 +79,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
 
         Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
-    }
+    }*/
 
 }

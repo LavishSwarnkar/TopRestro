@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -143,7 +145,11 @@ class RestroListFragment: Fragment() {
             view?.findViewById<TextView>(R.id.nothingFound)?.visibility = if(it) VISIBLE else GONE
         }
 
-        adapter = RestaurantsAdapter(restros, onNothingFound)
+        val navigate: (NavDirections) -> Unit = {
+            findNavController().navigate(it)
+        }
+
+        adapter = RestaurantsAdapter(restros, onNothingFound, navigate)
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -176,5 +182,7 @@ class RestroListFragment: Fragment() {
 
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }
