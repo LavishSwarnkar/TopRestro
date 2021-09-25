@@ -17,6 +17,9 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.AdminHelper
 import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.other.LogoutHelper
+import com.lavish.toprestro.other.TYPE_ADMIN
+import com.lavish.toprestro.other.TYPE_OWNER
+import com.lavish.toprestro.other.TYPE_USER
 import com.lavish.toprestro.ui.admin.manageRestro.ManageRestroActivity
 import com.lavish.toprestro.ui.admin.manageUsers.ManageUsersActivity
 

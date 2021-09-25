@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -176,8 +177,8 @@ class ReviewViewHolder(private val b: CardReviewBinding)
 
                 app.showLoadingDialog(context)
                 when(what){
-                    "Review" -> ReviewActionsHelper().editReview(restaurant.id!!, review.id!!, input, listener)
-                    "Reply" -> ReviewActionsHelper().editReply(restaurant.id!!, review.id!!, input, listener)
+                    "Review" -> ReviewActionsHelper().editReview(restaurant.id, review.id!!, input, listener)
+                    "Reply" -> ReviewActionsHelper().editReply(restaurant.id, review.id!!, input, listener)
                 }
             }
         })

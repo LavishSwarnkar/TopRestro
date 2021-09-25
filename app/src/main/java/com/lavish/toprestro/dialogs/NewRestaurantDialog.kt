@@ -13,13 +13,13 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
-import com.lavish.toprestro.ui.owner.OwnerActivity
 import com.lavish.toprestro.databinding.DialogNewRetaurantBinding
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.owner.NewRestaurantHelper
 import com.lavish.toprestro.firebaseHelpers.owner.RestaurantImageUploader
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.other.Prefs
+import com.lavish.toprestro.ui.owner.OwnerActivity
 
 class NewRestaurantDialog(val context: Context) {
 
@@ -101,7 +101,8 @@ class NewRestaurantDialog(val context: Context) {
 
         val listener = object : OnCompleteListener<String> {
             override fun onResult(t: String) {
-                val restro = Restaurant(name = restroName,
+                val restro = Restaurant(id = "",
+                        name = restroName,
                         ownerEmail = emailId,
                         imageURL = t)
                 uploadRestro(emailId!!, restro)
@@ -137,6 +138,7 @@ class NewRestaurantDialog(val context: Context) {
     }
 
     private fun saveRestroLocallyAndReload(restro: Restaurant) {
+
         Prefs(b.root.context).saveNewRestro(restro)
         (b.root.context as OwnerActivity).refreshHeader()
     }

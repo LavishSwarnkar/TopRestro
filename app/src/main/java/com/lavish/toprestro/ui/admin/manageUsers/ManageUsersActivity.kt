@@ -18,6 +18,9 @@ import com.lavish.toprestro.dialogs.NewAdminDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.UsersFetcher
 import com.lavish.toprestro.models.Profile
+import com.lavish.toprestro.other.TYPE_ADMIN
+import com.lavish.toprestro.other.TYPE_OWNER
+import com.lavish.toprestro.other.TYPE_USER
 
 class ManageUsersActivity : AppCompatActivity() {
 

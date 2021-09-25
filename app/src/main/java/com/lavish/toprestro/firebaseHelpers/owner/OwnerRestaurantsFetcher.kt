@@ -1,12 +1,15 @@
 package com.lavish.toprestro.firebaseHelpers.owner
 
-import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
+import com.lavish.toprestro.data.RestaurantDao
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Prefs
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class OwnerRestaurantsFetcher(val context: Context) {
+@DelicateCoroutinesApi
+class OwnerRestaurantsFetcher(val dao: RestaurantDao) {
 
     fun fetch(ownerEmail: String, listener: OnCompleteListener<Void?>){
         FirebaseFirestore.getInstance()
@@ -29,7 +32,9 @@ class OwnerRestaurantsFetcher(val context: Context) {
                     ).toMutableList()
 
                     //save Restaurants locally
-                    Prefs(context).saveRestros(restaurants)
+                    GlobalScope.launch {
+                        dao.insertAllRestaurants(restaurants)
+                    }
 
                     listener.onResult(null)
                 }

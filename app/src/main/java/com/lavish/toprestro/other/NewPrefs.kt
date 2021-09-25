@@ -8,16 +8,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.lavish.toprestro.models.Profile
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
-@InstallIn(ActivityComponent::class)
-@Module
-class NewPrefs @Inject constructor(@ActivityContext val context: Context) {
+class NewPrefs (val context: Context) {
 
     //Datastore object
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFS_FILE)
@@ -31,7 +24,7 @@ class NewPrefs @Inject constructor(@ActivityContext val context: Context) {
     }
 
     //Returns the LoginStatus (& Profile, loggedInAs if LoggedIn)
-    suspend fun getProfile(): LoginStatus {
+    suspend fun getLoginStatus(): LoginStatus {
         val data = context.dataStore.data.first()
 
         val profileStr = data[stringPreferencesKey(PREFS_KEY_PROFILE)]
@@ -52,6 +45,6 @@ class NewPrefs @Inject constructor(@ActivityContext val context: Context) {
 }
 
 sealed class LoginStatus {
-    class LoggedIn(profile: Profile, loggedInAs: String) : LoginStatus()
+    class LoggedIn(val profile: Profile, val loggedInAs: String) : LoginStatus()
     object NotLoggedIn: LoginStatus()
 }
