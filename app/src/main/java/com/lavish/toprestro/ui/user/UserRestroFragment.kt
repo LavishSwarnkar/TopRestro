@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.lavish.toprestro.App
+import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.ActivityRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.models.Restaurant
@@ -28,7 +30,7 @@ class UserRestroFragment: Fragment() {
     /*@Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory*/
 
-    val userViewModel: UserViewModel by activityViewModels()
+    val userViewModel: UserViewModel by viewModels()
 
     lateinit var b: ActivityRestroBinding
     val args: UserRestroFragmentArgs by navArgs()
@@ -46,7 +48,14 @@ class UserRestroFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         app = activity?.applicationContext as App
-        b = ActivityRestroBinding.inflate(layoutInflater)
+
+        b = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.activity_restro,
+            container,
+            false
+        )
+
         return b.root
     }
 

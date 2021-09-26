@@ -1,15 +1,15 @@
 package com.lavish.toprestro.ui.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -33,7 +33,7 @@ class RestroListFragment: Fragment() {
     /*@Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory*/
 
-    val userViewModel: UserViewModel by activityViewModels()
+    val userViewModel: UserViewModel by viewModels()
 
     lateinit var b: FragmentRestroListBinding
     private lateinit var app: App
@@ -46,8 +46,15 @@ class RestroListFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.e("RestroDebug", "onCreateView()")
         app = activity?.applicationContext as App
-        b = FragmentRestroListBinding.inflate(layoutInflater)
+
+        b = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_restro_list,
+            container,
+            false
+        )
 
         setHasOptionsMenu(true)
 
@@ -145,11 +152,7 @@ class RestroListFragment: Fragment() {
             view?.findViewById<TextView>(R.id.nothingFound)?.visibility = if(it) VISIBLE else GONE
         }
 
-        val navigate: (NavDirections) -> Unit = {
-            findNavController().navigate(it)
-        }
-
-        adapter = RestaurantsAdapter(restros, onNothingFound, navigate)
+        adapter = RestaurantsAdapter(restros, onNothingFound)
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())

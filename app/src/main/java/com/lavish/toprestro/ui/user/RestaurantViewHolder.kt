@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -21,7 +21,7 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
     : RecyclerView.ViewHolder(b.root) {
 
     @SuppressLint("SetTextI18n")
-    fun bind(restaurant: Restaurant, navigate: (NavDirections) -> Unit) {
+    fun bind(restaurant: Restaurant) {
         resetImage()
 
         //Show Name & Image
@@ -53,7 +53,7 @@ class RestaurantViewHolder(private val b: CardUserRestroBinding)
             val direction = RestroListFragmentDirections.actionRestroListFragmentToUserRestroFragment(
                 Gson().toJson(restaurant)
             )
-            navigate(direction)
+            b.root.findNavController().navigate(direction)
         }
     }
 

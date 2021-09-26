@@ -2,15 +2,13 @@ package com.lavish.toprestro.ui.user
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.RecyclerView
 import com.lavish.toprestro.databinding.CardUserRestroBinding
 import com.lavish.toprestro.models.Restaurant
 
 class RestaurantsAdapter(
     private var restaurants: MutableList<Restaurant>,
-    val onNothingFound: (Boolean) -> Unit,
-    val navigate: (NavDirections) -> Unit
+    val onNothingFound: (Boolean) -> Unit
 ) : RecyclerView.Adapter<RestaurantViewHolder>() {
 
     var allRestaurants : List<Restaurant> = restaurants.toList()
@@ -43,7 +41,7 @@ class RestaurantsAdapter(
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        holder.bind(restaurants[position], navigate)
+        holder.bind(restaurants[position])
     }
 
     override fun getItemCount() = restaurants.size
