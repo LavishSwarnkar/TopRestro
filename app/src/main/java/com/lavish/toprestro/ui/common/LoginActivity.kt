@@ -27,17 +27,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var prefs: NewPrefs
-
-    /*@Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory*/
 
     val loginViewModel: LoginViewModel by viewModels()
 
@@ -46,8 +39,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //loginViewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
         setContentView(R.layout.activity_login)
         app = applicationContext as App
@@ -73,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
     private val signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()) { result: FirebaseAuthUIAuthenticationResult -> onSignInResult(result) }
 
-    private fun login(userType: String) {
+    public fun login(userType: String) {
         this.userType = userType
         val providers = listOf(
                 GoogleBuilder().build()
@@ -138,12 +129,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeLoginEvents() {
         lifecycleScope.launch {
-            loginViewModel.loginHelperEvents.collect {
+            loginViewModel.uiEvents.collect {
                 when(it) {
-                    is LoginHelperEvents.SaveProfile -> {
-                        prefs.saveProfile(it.profile, it.type)
-                    }
-                    is LoginHelperEvents.InputName -> {
+                    is UiEvents.InputName -> {
                         val listener = object : OnInputCompleteListener {
                             override fun onSubmit(input: String) {
                                 loginViewModel.createAccount(input)

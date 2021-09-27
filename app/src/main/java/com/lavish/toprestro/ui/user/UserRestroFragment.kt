@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +17,7 @@ import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.ActivityRestroBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
+import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
 import com.lavish.toprestro.ui.user.reviews.ReviewsAdapter
@@ -30,7 +31,7 @@ class UserRestroFragment: Fragment() {
     /*@Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory*/
 
-    val userViewModel: UserViewModel by viewModels()
+    val userViewModel: UserViewModel by activityViewModels()
 
     lateinit var b: ActivityRestroBinding
     val args: UserRestroFragmentArgs by navArgs()
@@ -38,8 +39,9 @@ class UserRestroFragment: Fragment() {
 
     private lateinit var restaurant: Restaurant
     private var isEditMode: Boolean = false
+    private lateinit var userProfile: Profile
 
-    private var reviews: MutableList<Review> = mutableListOf()
+    private lateinit var reviews: MutableList<Review>
     lateinit var adapter: ReviewsAdapter
 
     override fun onCreateView(
@@ -81,6 +83,9 @@ class UserRestroFragment: Fragment() {
 
     private suspend fun fetchReviews() {
         userViewModel.fetchReviews(restaurant.rId)
+        userViewModel.userProfile.observe(viewLifecycleOwner) {
+            userProfile = it
+        }
 
         userViewModel.restroUiState.collect {
             when(it) {
@@ -113,7 +118,14 @@ class UserRestroFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ReviewsAdapter(restaurant, reviews, isRateReviewDone(), isEditMode)
+        adapter = ReviewsAdapter(
+            restaurant,
+            reviews,
+            isRateReviewDone(),
+            isEditMode,
+            userProfile,
+            listEventCallbacks
+        )
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -153,4 +165,51 @@ class UserRestroFragment: Fragment() {
         )
     }
 
+    private val listEventCallbacks = object: ListEventCallbacks {
+
+        override fun onInserted(position: Int, review: Review, restaurant: Restaurant) {
+            reviews.add(position, review)
+            adapter.notifyItemInserted(position + 1)
+            userViewModel.onRestaurantRatingChanged(restaurant)
+        }
+
+        override fun onModified(position: Int, review: Review) {
+            reviews.removeAt(position)
+            reviews.add(position, review)
+            adapter.notifyItemChanged(position)
+        }
+
+        override fun onDeleted(position: Int) {
+            reviews.removeAt(position)
+            adapter.notifyItemRemoved(position)
+
+            if(reviews.size == 0)
+                adapter.notifyItemChanged(0)
+        }
+
+        override fun showLoadingDialog() {
+            app.showLoadingDialog(requireContext())
+        }
+
+        override fun hideLoadingDialog() {
+            app.hideLoadingDialog()
+        }
+
+        override fun showErrorDialog(e: String) {
+            ErrorDialog(requireContext()).show(e)
+        }
+
+    }
+
+}
+
+interface ListEventCallbacks {
+    fun onInserted(position: Int, review: Review, restaurant: Restaurant)
+    fun onModified(position: Int, review: Review)
+    fun onDeleted(position: Int)
+
+    fun showLoadingDialog()
+    fun hideLoadingDialog()
+
+    fun showErrorDialog(e: String)
 }

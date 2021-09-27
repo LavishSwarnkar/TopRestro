@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.CardReviewBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
@@ -19,30 +18,26 @@ import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.admin.ReviewActionsHelper
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
+import com.lavish.toprestro.ui.user.ListEventCallbacks
 
 class ReviewViewHolder(private val b: CardReviewBinding)
     : RecyclerView.ViewHolder(b.root) {
 
-    private lateinit var context: Context
-    private lateinit var app: App
-    private lateinit var onDeleted: () -> Unit
-    private lateinit var onModified: () -> Unit
+    private var pos: Int = 0
     private lateinit var restaurant: Restaurant
+    private lateinit var listEventCallbacks: ListEventCallbacks
 
     @SuppressLint("SetTextI18n")
     fun bind(
-            restaurant: Restaurant,
-            review: Review,
-            isEditMode: Boolean,
-            onDeleted: () -> Unit,
-            onModified: () -> Unit,
+        restaurant: Restaurant,
+        position: Int,
+        review: Review,
+        isEditMode: Boolean,
+        listEventCallbacks: ListEventCallbacks,
     ) {
-        context = b.root.context
-        app = context.applicationContext as App
         this.restaurant = restaurant
-        this.onDeleted = onDeleted
-        this.onModified = onModified
-
+        this.pos = position
+        this.listEventCallbacks = listEventCallbacks
 
         //Basic
         b.userNameTv.text = review.userName
@@ -79,10 +74,10 @@ class ReviewViewHolder(private val b: CardReviewBinding)
             b.editBtn.setOnClickListener {
                 var checkedItem = 0
 
-                MaterialAlertDialogBuilder(context)
+                MaterialAlertDialogBuilder(b.root.context)
                         .setTitle("Edit")
                         .setPositiveButton("GO") { _, _ ->
-                            edit(choices[checkedItem], review)
+                            edit(b.root.context, choices[checkedItem], review)
                         }
                         .setSingleChoiceItems(choices, 0) { _, which ->
                             checkedItem = which
@@ -93,7 +88,7 @@ class ReviewViewHolder(private val b: CardReviewBinding)
             b.deleteBtn.setOnClickListener {
                 var checkedItem = 0
 
-                MaterialAlertDialogBuilder(context)
+                MaterialAlertDialogBuilder(b.root.context)
                         .setTitle("Delete")
                         .setPositiveButton("GO") { _, _ ->
                             when(checkedItem) {
@@ -110,7 +105,7 @@ class ReviewViewHolder(private val b: CardReviewBinding)
     }
 
     private fun deleteReview(review: Review) {
-        app.showLoadingDialog(context)
+        listEventCallbacks.showLoadingDialog()
 
         var newNoOfRatings = restaurant.noOfRatings - 1
         if(newNoOfRatings == 0) newNoOfRatings = 1
@@ -118,39 +113,39 @@ class ReviewViewHolder(private val b: CardReviewBinding)
 
         ReviewActionsHelper().deleteReview(restaurant.id!!, review.id!!, newAvgRating, object : OnCompleteListener<Void?> {
             override fun onResult(t: Void?) {
-                app.hideLoadingDialog()
-                onDeleted()
+                listEventCallbacks.hideLoadingDialog()
+                listEventCallbacks.onDeleted(pos)
             }
 
             override fun onError(e: String) {
-                app.hideLoadingDialog()
-                ErrorDialog(context).show(e)
+                listEventCallbacks.hideLoadingDialog()
+                listEventCallbacks.showErrorDialog(e)
             }
 
         })
     }
 
     private fun deleteReply(review: Review) {
-        app.showLoadingDialog(context)
+        listEventCallbacks.showLoadingDialog()
 
         ReviewActionsHelper().deleteReply(restaurant.id!!, review.id!!, object : OnCompleteListener<Void?> {
             override fun onResult(t: Void?) {
-                app.hideLoadingDialog()
+                listEventCallbacks.hideLoadingDialog()
 
                 review.reply = null
 
-                onModified()
+                listEventCallbacks.onModified(pos, review)
             }
 
             override fun onError(e: String) {
-                app.hideLoadingDialog()
-                ErrorDialog(context).show(e)
+                listEventCallbacks.hideLoadingDialog()
+                listEventCallbacks.showErrorDialog(e)
             }
 
         })
     }
 
-    private fun edit(what: String, review: Review) {
+    private fun edit(context: Context, what: String, review: Review) {
 
         TextInputDialog(context).takeInput("Edit $what", R.drawable.ic_edit, what, EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES, "SAVE", true
                 , prefill = if(what == "Review") review.review!! else review.reply ?: ""
@@ -158,24 +153,24 @@ class ReviewViewHolder(private val b: CardReviewBinding)
             override fun onSubmit(input: String) {
                 val listener = object : OnCompleteListener<Void?> {
                     override fun onResult(t: Void?) {
-                        app.hideLoadingDialog()
+                        listEventCallbacks.hideLoadingDialog()
 
                         when(what){
                             "Review" -> review.review = input
                             "Reply" -> review.reply = input
                         }
 
-                        onModified()
+                        listEventCallbacks.onModified(pos, review)
                     }
 
                     override fun onError(e: String) {
-                        app.hideLoadingDialog()
+                        listEventCallbacks.hideLoadingDialog()
                         ErrorDialog(context).show(e)
                     }
 
                 }
 
-                app.showLoadingDialog(context)
+                listEventCallbacks.showLoadingDialog()
                 when(what){
                     "Review" -> ReviewActionsHelper().editReview(restaurant.id!!, review.id!!, input, listener)
                     "Reply" -> ReviewActionsHelper().editReply(restaurant.id!!, review.id!!, input, listener)

@@ -1,21 +1,25 @@
 package com.lavish.toprestro.ui.user
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.common.AllRestaurantsFetcher
 import com.lavish.toprestro.firebaseHelpers.user.ReviewsFetcher
+import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
 import com.lavish.toprestro.other.ACCESS_DENIED
+import com.lavish.toprestro.other.LoginStatus
 import com.lavish.toprestro.other.NetworkStatusHelper
+import com.lavish.toprestro.other.NewPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
+    val prefs: NewPrefs,
     val networkStatusHelper: NetworkStatusHelper
 ): ViewModel(), LifecycleObserver {
 
@@ -24,6 +28,24 @@ class UserViewModel @Inject constructor(
 
     private val _restroUiState = MutableStateFlow<UiState>(UiState.Empty)
     val restroUiState: StateFlow<UiState> = _restroUiState
+
+    private val _userProfile: MutableLiveData<Profile> = MutableLiveData()
+    val userProfile: LiveData<Profile> = _userProfile
+
+    init {
+        getUserProfile()
+    }
+
+    private fun getUserProfile() {
+        viewModelScope.launch {
+            val status = prefs.getLoginStatus()
+            when(status) {
+                is LoginStatus.LoggedIn -> {
+                    _userProfile.value = status.profile
+                }
+            }
+        }
+    }
 
     //For RestroListFragment
     fun fetchRestros() {
@@ -39,7 +61,8 @@ class UserViewModel @Inject constructor(
         AllRestaurantsFetcher()
             .fetch(object : OnCompleteListener<MutableList<Restaurant>> {
                 override fun onResult(t: MutableList<Restaurant>) {
-                    _restroListUistate.value = UiState.ShowData(t)
+                    val livedata = MutableLiveData(t)
+                    _restroListUistate.value = UiState.ShowData(livedata)
                 }
 
                 override fun onError(e: String) {
@@ -71,6 +94,22 @@ class UserViewModel @Inject constructor(
                     _restroUiState.value = UiState.Error(e)
                 }
             })
+    }
+
+    fun onRestaurantRatingChanged(changedRestro: Restaurant) {
+        if(restroListUiState.value is UiState.ShowData<*>) {
+            val livedata = (restroListUiState.value as UiState.ShowData<*>).data
+                    as MutableLiveData<MutableList<Restaurant>>
+
+            for(restro in livedata.value!!){
+                if(changedRestro.id == restro.id){
+                    livedata.value!!.remove(restro)
+                    livedata.value!!.add(changedRestro)
+                    livedata.postValue(livedata.value)
+                    break
+                }
+            }
+        }
     }
 
 }

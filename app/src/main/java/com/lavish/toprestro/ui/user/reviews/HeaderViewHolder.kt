@@ -18,8 +18,11 @@ import com.lavish.toprestro.databinding.HeaderUserRestroActivityBinding
 import com.lavish.toprestro.dialogs.ErrorDialog
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
 import com.lavish.toprestro.firebaseHelpers.user.NewReviewHelper
+import com.lavish.toprestro.models.Profile
 import com.lavish.toprestro.models.Restaurant
 import com.lavish.toprestro.models.Review
+import com.lavish.toprestro.ui.user.ListEventCallbacks
+import java.util.*
 
 class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.ViewHolder(b.root){
 
@@ -27,11 +30,21 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
     private var noOfReviews: Int = 0
     private lateinit var restaurant: Restaurant
+    private lateinit var listEventCallbacks: ListEventCallbacks
+    private lateinit var profile: Profile
 
     @SuppressLint("SetTextI18n")
-    fun bind(restaurant: Restaurant, isRateReviewDone: Boolean, noOfReviews: Int) {
+    fun bind(
+        restaurant: Restaurant,
+        isRateReviewDone: Boolean,
+        noOfReviews: Int,
+        listEventCallbacks: ListEventCallbacks,
+        userProfile: Profile
+    ) {
         this.restaurant = restaurant
         this.noOfReviews = noOfReviews
+        this.listEventCallbacks = listEventCallbacks
+        this.profile = userProfile
 
         showRating()
 
@@ -98,9 +111,8 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
             else -> {
                 app.showLoadingDialog(context)
 
-                val profile = app.profile
-                val review = Review(userName = profile!!.name,
-                        userEmail = profile.emailId,
+                val review = Review(userName = profile.name,
+                        userEmail = "${profile.emailId}${Calendar.getInstance().timeInMillis}",
                         restaurantId = restaurant.id!!,
                         restroName = restaurant.name,
                         ownerEmail = restaurant.ownerEmail,
@@ -136,6 +148,7 @@ class HeaderViewHolder(val b: HeaderUserRestroActivityBinding) : RecyclerView.Vi
 
     private fun onReviewDone(review: Review) {
         b.rateReviewRoot.visibility = GONE
+        listEventCallbacks.onInserted(0, review, restaurant)
         //TODO: (b.root.context as RestroActivity).showNewReview(restaurant, review)
     }
 

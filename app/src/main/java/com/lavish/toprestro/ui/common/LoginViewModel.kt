@@ -1,6 +1,7 @@
 package com.lavish.toprestro.ui.common
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.lavish.toprestro.data.RestaurantDao
 import com.lavish.toprestro.firebaseHelpers.OnCompleteListener
@@ -12,14 +13,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @DelicateCoroutinesApi
 @HiltViewModel
-class LoginViewModel @Inject constructor(var restaurantDao: RestaurantDao) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    var restaurantDao: RestaurantDao,
+    var prefs: NewPrefs
+) : ViewModel() {
 
-    private var _loginHelperEvents = MutableStateFlow<LoginHelperEvents>(LoginHelperEvents.Empty)
-    var loginHelperEvents: StateFlow<LoginHelperEvents> = _loginHelperEvents
+    private var _loginHelperEvents = MutableStateFlow<UiEvents>(UiEvents.Empty)
+    var uiEvents: StateFlow<UiEvents> = _loginHelperEvents
 
     lateinit var emailId: String
     lateinit var type: String
@@ -75,11 +80,13 @@ class LoginViewModel @Inject constructor(var restaurantDao: RestaurantDao) : Vie
     }
 
     private fun saveProfile(profile: Profile, type: String) {
-        _loginHelperEvents.value = LoginHelperEvents.SaveProfile(profile, type)
+        viewModelScope.launch {
+            prefs.saveProfile(profile, type)
+        }
     }
 
     private fun inputName() {
-        _loginHelperEvents.value = LoginHelperEvents.InputName()
+        _loginHelperEvents.value = UiEvents.InputName()
     }
 
     fun createAccount(name: String) {
@@ -101,8 +108,7 @@ class LoginViewModel @Inject constructor(var restaurantDao: RestaurantDao) : Vie
 
 }
 
-sealed class LoginHelperEvents {
-    class SaveProfile(val profile: Profile, val type: String): LoginHelperEvents()
-    class InputName: LoginHelperEvents()
-    object Empty: LoginHelperEvents()
+sealed class UiEvents {
+    class InputName: UiEvents()
+    object Empty: UiEvents()
 }

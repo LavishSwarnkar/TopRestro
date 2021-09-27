@@ -8,7 +8,8 @@ import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,19 +27,16 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RestroListFragment: Fragment() {
 
-    //Convert Adapter to ListAdapter
+    //ListAdapter filter, multiple view types workaround
     //Loading dialog
-    //App.profile
+    //RoomDB
 
-    /*@Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory*/
-
-    val userViewModel: UserViewModel by viewModels()
+    val userViewModel: UserViewModel by activityViewModels()
 
     lateinit var b: FragmentRestroListBinding
     private lateinit var app: App
 
-    var restros: MutableList<Restaurant>? = null
+    var restros: MutableLiveData<MutableList<Restaurant>> = MutableLiveData()
     private lateinit var adapter: RestaurantsAdapter
 
     override fun onCreateView(
@@ -64,15 +62,14 @@ class RestroListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //userViewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
-
         lifecycleScope.launch {
             fetchRestros()
         }
     }
 
     suspend fun fetchRestros() {
-        userViewModel.fetchRestros()
+        if (!(userViewModel.restroListUiState.value is UiState.ShowData<*>))
+            userViewModel.fetchRestros()
 
         userViewModel.restroListUiState.collect {
             when(it) {
@@ -85,8 +82,8 @@ class RestroListFragment: Fragment() {
                 is UiState.ShowData<*> -> {
                     app.hideLoadingDialog()
 
-                    restros = it.data as MutableList<Restaurant>
-                    setupAdapter(restros!!)
+                    restros = it.data as MutableLiveData<MutableList<Restaurant>>
+                    setupAdapter(restros)
                 }
 
                 //User offline
@@ -140,8 +137,8 @@ class RestroListFragment: Fragment() {
 
     //On Data fetched
 
-    private fun setupAdapter(restros: MutableList<Restaurant>) {
-        if(restros.size == 0){
+    private fun setupAdapter(restros: MutableLiveData<MutableList<Restaurant>>) {
+        if(restros.value?.size == 0){
             app.hideLoadingDialog()
             b.nothingFound.visibility = View.VISIBLE
             b.filterHeader.visibility = View.GONE
@@ -152,7 +149,11 @@ class RestroListFragment: Fragment() {
             view?.findViewById<TextView>(R.id.nothingFound)?.visibility = if(it) VISIBLE else GONE
         }
 
-        adapter = RestaurantsAdapter(restros, onNothingFound)
+        adapter = RestaurantsAdapter(restros.value!!, onNothingFound)
+
+        restros.observe(viewLifecycleOwner) {
+            Log.d("TRDebug", "observer called!")
+        }
 
         //Layout Manager
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -163,6 +164,11 @@ class RestroListFragment: Fragment() {
 
         setupFilterHandler()
         app.hideLoadingDialog()
+
+        restros.observe(viewLifecycleOwner) {
+            Log.d("MyRestroAdapter", "observer invoked!")
+            adapter.updateList(it)
+        }
     }
 
     private fun setupFilterHandler() {
