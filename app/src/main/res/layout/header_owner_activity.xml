@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.user.reviews.RestroActivity">
+        tools:context=".old.ui.user.reviews.RestroActivity">
 
         <TextView
             android:id="@+id/yourRestaurantsTitle"

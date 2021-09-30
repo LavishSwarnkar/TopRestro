@@ -8,9 +8,9 @@ import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.view.ViewGroup
 import android.view.Window
-import com.lavish.toprestro.models.Profile
-import com.lavish.toprestro.models.Restaurant
-import com.lavish.toprestro.other.Prefs
+import com.lavish.toprestro.old.models.Profile
+import com.lavish.toprestro.old.models.Restaurant
+import com.lavish.toprestro.old.other.Prefs
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

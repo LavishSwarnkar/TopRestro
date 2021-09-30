@@ -11,21 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRestro">
-        <activity android:name=".ui.admin.manageUsers.ManageUsersActivity"
+        <activity android:name="com.lavish.toprestro.old.ui.admin.manageUsers.ManageUsersActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".ui.admin.AdminActivity"/>
-        <activity android:name=".ui.admin.manageRestro.ManageRestroActivity"
+            android:parentActivityName="com.lavish.toprestro.old.ui.admin.AdminActivity"/>
+        <activity android:name="com.lavish.toprestro.old.ui.admin.manageRestro.ManageRestroActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".ui.admin.AdminActivity"/>
-        <activity android:name=".ui.admin.AdminActivity"
+            android:parentActivityName="com.lavish.toprestro.old.ui.admin.AdminActivity"/>
+        <activity android:name="com.lavish.toprestro.old.ui.admin.AdminActivity"
             android:label="TopRestro Admin"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.owner.OwnerActivity"
+            android:name="com.lavish.toprestro.old.ui.owner.OwnerActivity"
             android:label="TopRestro Owner"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.common.SplashActivity"
+            android:name="com.lavish.toprestro.old.ui.common.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,9 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.common.LoginActivity"
+        <activity android:name="com.lavish.toprestro.old.ui.common.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.user.MainActivity"
+        <activity android:name="com.lavish.toprestro.old.ui.user.MainActivity"
             android:screenOrientation="portrait"/>
     </application>
 
