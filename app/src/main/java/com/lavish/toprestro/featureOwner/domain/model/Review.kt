@@ -3,28 +3,23 @@ package com.lavish.toprestro.featureOwner.domain.model
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Review(var id: String? = null,
-        var timestamp: Date = Date(),
+data class Review(var id: String,
+        var timestamp: Date,
 
-        var userName: String? = null,
-        var userEmail: String? = null,
+        var userName: String,
+        var userEmail: String,
 
-        var ownerEmail: String? = null,
-        var restaurantId: String? = null,
+        var ownerEmail: String,
+        var restaurantId: String,
 
-        var starRating: Float? = 0f,
-        var review: String? = null,
-        var reply: String? = null,
-        var restroName: String? = null) {
-
-    constructor() : this(userName = null)
+        var starRating: Float,
+        var review: String,
+        var reply: String,
+        var restroName: String) {
 
     fun formattedDate(): String {
         val sdf = SimpleDateFormat("dd MMM", Locale.ENGLISH)
         return sdf.format(timestamp)
     }
 
-    init {
-        timestamp = Date()
-    }
 }

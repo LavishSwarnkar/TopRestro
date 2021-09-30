@@ -8,32 +8,15 @@ import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.view.ViewGroup
 import android.view.Window
-import com.lavish.toprestro.old.models.Profile
-import com.lavish.toprestro.old.models.Restaurant
-import com.lavish.toprestro.old.other.Prefs
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class App : Application() {
 
-    var updatedRestro: Restaurant? = null
-    var profile: Profile? = null
-    var loggedInAs: String? = null
-
     private var dialog: Dialog? = null
 
     override fun onCreate() {
         super.onCreate()
-        init()
-    }
-
-    private fun init() {
-        val pair = Prefs(this).getProfile()
-
-        if(pair != null){
-            profile = pair.first
-            loggedInAs = pair.second
-        }
     }
 
     fun showLoadingDialog(context: Context?) {
@@ -51,9 +34,6 @@ class App : Application() {
     fun hideLoadingDialog() {
         if (dialog != null) dialog!!.dismiss()
     }
-
-    val isLoggedIn: Boolean
-        get() = profile != null
 
     val isOffline: Boolean
         get() {

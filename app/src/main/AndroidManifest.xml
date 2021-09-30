@@ -11,21 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopRestro">
-        <activity android:name="com.lavish.toprestro.old.ui.admin.manageUsers.ManageUsersActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.lavish.toprestro.old.ui.admin.AdminActivity"/>
-        <activity android:name="com.lavish.toprestro.old.ui.admin.manageRestro.ManageRestroActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.lavish.toprestro.old.ui.admin.AdminActivity"/>
-        <activity android:name="com.lavish.toprestro.old.ui.admin.AdminActivity"
-            android:label="TopRestro Admin"
-            android:screenOrientation="portrait"/>
+
         <activity
-            android:name="com.lavish.toprestro.old.ui.owner.OwnerActivity"
-            android:label="TopRestro Owner"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lavish.toprestro.old.ui.common.SplashActivity"
+            android:name=".featureOwner.presentation.login.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lavish.toprestro.old.ui.common.LoginActivity"
+        <activity android:name=".featureOwner.presentation.login.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.lavish.toprestro.old.ui.user.MainActivity"
+        <activity android:name=".featureOwner.presentation.ownerHome.OwnerHomeScreen"
             android:screenOrientation="portrait"/>
     </application>
 
