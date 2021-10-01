@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.lavish.toprestro.featureOwner.data.prefs.PrefsRepositoryImpl
 import com.lavish.toprestro.featureOwner.domain.repository.LoginStatus
+import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
 import com.lavish.toprestro.featureOwner.presentation.ownerHome.OwnerHomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var prefs: PrefsRepositoryImpl
+    lateinit var prefs: PrefsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

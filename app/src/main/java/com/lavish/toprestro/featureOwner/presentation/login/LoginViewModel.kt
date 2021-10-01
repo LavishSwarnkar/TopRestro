@@ -3,10 +3,10 @@ package com.lavish.toprestro.featureOwner.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
-import com.lavish.toprestro.featureOwner.data.prefs.PrefsRepositoryImpl
-import com.lavish.toprestro.featureOwner.data.room.RestaurantRepositoryImpl
 import com.lavish.toprestro.featureOwner.domain.model.Profile
 import com.lavish.toprestro.featureOwner.domain.model.Restaurant
+import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
+import com.lavish.toprestro.featureOwner.domain.repository.RestaurantRepository
 import com.lavish.toprestro.other.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -18,8 +18,8 @@ import javax.inject.Inject
 @DelicateCoroutinesApi
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val restaurantRepository: RestaurantRepositoryImpl,
-    val prefsRepository: PrefsRepositoryImpl
+    val restaurantRepository: RestaurantRepository,
+    val prefsRepository: PrefsRepository
 ) : ViewModel() {
 
     private var _loginHelperEvents = MutableStateFlow<UiEvents>(UiEvents.Empty)

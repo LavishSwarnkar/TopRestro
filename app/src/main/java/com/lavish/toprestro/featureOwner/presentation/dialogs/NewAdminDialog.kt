@@ -9,9 +9,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.DialogNewAdminBinding
-import com.lavish.toprestro.old.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.old.firebaseHelpers.admin.AdminHelper
-import com.lavish.toprestro.old.models.Profile
+import com.lavish.toprestro.featureOwner.domain.model.Profile
+import com.lavish.toprestro.other.OnCompleteListener
 
 class NewAdminDialog(val context: Context) {
 
