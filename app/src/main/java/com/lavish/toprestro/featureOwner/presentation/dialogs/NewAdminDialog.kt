@@ -10,6 +10,7 @@ import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.DialogNewAdminBinding
 import com.lavish.toprestro.featureOwner.domain.model.Profile
+import com.lavish.toprestro.other.AdminHelper
 import com.lavish.toprestro.other.OnCompleteListener
 
 class NewAdminDialog(val context: Context) {

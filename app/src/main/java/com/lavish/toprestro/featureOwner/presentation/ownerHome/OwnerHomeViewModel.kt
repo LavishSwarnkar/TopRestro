@@ -100,7 +100,8 @@ class OwnerHomeViewModel @Inject constructor(
                 ownerUseCases.replyReview(review, reply)
 
                 //Remove review from the list
-                val reviews = state.value.reviews
+                val reviews = mutableListOf<Review>()
+                reviews.addAll(state.value.reviews)
                 reviews.remove(review)
 
                 _state.value = state.value.copy(

@@ -2,28 +2,32 @@ package com.lavish.toprestro.featureOwner.data.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.lavish.toprestro.featureOwner.domain.model.Profile
 import com.lavish.toprestro.featureOwner.domain.model.Restaurant
 import com.lavish.toprestro.featureOwner.domain.model.Review
 import com.lavish.toprestro.featureOwner.domain.repository.FirestoreException
 import com.lavish.toprestro.featureOwner.domain.repository.OwnerRepository
 import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
+import com.lavish.toprestro.featureOwner.domain.repository.RestaurantRepository
 import kotlinx.coroutines.tasks.await
 
-class OwnerRepositoryImpl(prefsRepository: PrefsRepository) : OwnerRepository {
-
-    override val ownerProfile: Profile
-        get() = Profile("", "")
+class OwnerRepositoryImpl(
+    val prefsRepository: PrefsRepository,
+    val restaurantRepository: RestaurantRepository
+) : OwnerRepository {
 
     @Throws(FirestoreException::class)
     override suspend fun getAllRestaurants(): List<Restaurant> {
+        val ownerProfile = prefsRepository.getProfile()
+
         try {
-            return FirebaseFirestore.getInstance()
+            val restaurants = FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .whereEqualTo("ownerEmail", ownerProfile.emailId)
                 .get()
                 .await()
                 .toObjects(Restaurant::class.java)
+            restaurantRepository.insertAllRestaurants(restaurants)
+            return restaurants
         } catch (e: Exception) {
             throw FirestoreException(e.message.toString())
         }
@@ -31,8 +35,10 @@ class OwnerRepositoryImpl(prefsRepository: PrefsRepository) : OwnerRepository {
 
     @Throws(FirestoreException::class)
     override suspend fun getReviews(): List<Review> {
+        val ownerProfile = prefsRepository.getProfile()
+
         try {
-            return FirebaseFirestore.getInstance()
+            val reviews = FirebaseFirestore.getInstance()
                 .collectionGroup("reviews")
                 .whereEqualTo("ownerEmail", ownerProfile.emailId)
                 .whereEqualTo("reply", null)
@@ -40,6 +46,7 @@ class OwnerRepositoryImpl(prefsRepository: PrefsRepository) : OwnerRepository {
                 .get()
                 .await()
                 .toObjects(Review::class.java)
+            return reviews
         } catch (e: Exception) {
             throw FirestoreException(e.message.toString())
         }

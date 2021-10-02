@@ -9,17 +9,10 @@ import android.view.View.GONE
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.databinding.DialogNewRetaurantBinding
-import com.lavish.toprestro.old.firebaseHelpers.OnCompleteListener
-import com.lavish.toprestro.old.firebaseHelpers.owner.NewRestaurantHelper
-import com.lavish.toprestro.old.firebaseHelpers.owner.RestaurantImageUploader
-import com.lavish.toprestro.old.models.Restaurant
-import com.lavish.toprestro.old.other.Prefs
-import com.lavish.toprestro.old.ui.owner.OwnerActivity
 
 class NewRestaurantDialog(val context: Context) {
 
@@ -52,7 +45,7 @@ class NewRestaurantDialog(val context: Context) {
 
         //Buttons
         b.editImageFAB.setOnClickListener {
-            (b.root.context as OwnerActivity).openImagePicker()
+            //TODO: (b.root.context as OwnerActivity).openImagePicker()
         }
         b.addBtn.setOnClickListener { createNewRestaurant() }
 
@@ -87,15 +80,14 @@ class NewRestaurantDialog(val context: Context) {
     }
 
     private fun createNewRestaurant() {
-        app.profile
         if(validate()){
             app.showLoadingDialog(b.root.context)
-            uploadImage()
+            //TODO: uploadImage()
             dialog.dismiss()
         }
     }
 
-    private fun uploadImage() {
+    /*private fun uploadImage() {
         val emailId = app.profile!!.emailId
         val restroName = b.nameEt.editText!!.text.trim().toString()
 
@@ -141,10 +133,10 @@ class NewRestaurantDialog(val context: Context) {
 
         Prefs(b.root.context).saveNewRestro(restro)
         (b.root.context as OwnerActivity).refreshHeader()
-    }
+    }*/
 }
 
-private fun OwnerActivity.refreshHeader() {
+/*private fun OwnerActivity.refreshHeader() {
     adapter.notifyItemChanged(0)
 }
 
@@ -155,5 +147,5 @@ private fun OwnerActivity.openImagePicker() {
             .maxResultSize(1080, 1080)
             .createIntent { intent ->
                 startForProfileImageResult.launch(intent)
-            }
-}
+            }*/
+

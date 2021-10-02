@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.lavish.toprestro.featureOwner.domain.repository.LoginStatus
 import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
-import com.lavish.toprestro.featureOwner.presentation.ownerHome.OwnerHomeScreen
+import com.lavish.toprestro.featureOwner.presentation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
                 }
                 is LoginStatus.LoggedIn -> {
 
-                    startActivity(Intent(this@SplashActivity, OwnerHomeScreen::class.java))
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
 
                 /*when(loginStatus.loggedInAs) {
                         TYPE_USER -> startActivity(Intent(this@SplashActivity, MainActivity::class.java))

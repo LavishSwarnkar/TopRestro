@@ -13,5 +13,14 @@ data class Restaurant(
         var avgRating: Float = 0f,
         var noOfRatings: Int = 0) {
 
+        constructor(): this(
+                "",
+                "",
+                "",
+                "",
+                0f,
+                0
+        )
+
         override fun toString(): String = name
 }

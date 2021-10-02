@@ -54,6 +54,7 @@ class LoginViewModel @Inject constructor(
 
                                     it.documents.forEach { doc ->
                                         if(doc != null && doc.exists()){
+                                            doc.data?.set("id", doc.id)
                                             val restaurant = doc.toObject(Restaurant::class.java)!!
                                             restaurant.id = doc.id
                                             restaurants.add(restaurant)

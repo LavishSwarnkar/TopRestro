@@ -16,11 +16,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.lavish.toprestro.App
 import com.lavish.toprestro.R
 import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
-import com.lavish.toprestro.other.*
+import com.lavish.toprestro.featureOwner.presentation.MainActivity
 import com.lavish.toprestro.featureOwner.presentation.dialogs.ErrorDialog
 import com.lavish.toprestro.featureOwner.presentation.dialogs.OnInputCompleteListener
 import com.lavish.toprestro.featureOwner.presentation.dialogs.TextInputDialog
-import com.lavish.toprestro.featureOwner.presentation.ownerHome.OwnerHomeScreen
+import com.lavish.toprestro.other.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -106,9 +106,9 @@ class LoginActivity : AppCompatActivity() {
 
                         //Navigate to Activity
                         when(userType) {
-                            TYPE_USER -> startActivity(Intent(this@LoginActivity, OwnerHomeScreen::class.java))
-                            TYPE_OWNER -> startActivity(Intent(this@LoginActivity, OwnerHomeScreen::class.java))
-                            TYPE_ADMIN -> startActivity(Intent(this@LoginActivity, OwnerHomeScreen::class.java))
+                            TYPE_USER -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            TYPE_OWNER -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            TYPE_ADMIN -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
                         finish()
                     }

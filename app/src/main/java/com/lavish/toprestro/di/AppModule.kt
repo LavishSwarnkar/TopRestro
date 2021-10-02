@@ -47,8 +47,11 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideOwnerRepository(prefsRepository: PrefsRepository): OwnerRepository {
-        return OwnerRepositoryImpl(prefsRepository)
+    fun provideOwnerRepository(
+        prefsRepository: PrefsRepository,
+        restaurantRepository: RestaurantRepository
+    ): OwnerRepository {
+        return OwnerRepositoryImpl(prefsRepository, restaurantRepository)
     }
 
     @Provides
