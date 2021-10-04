@@ -22,7 +22,7 @@ class OwnerHomeViewModel @Inject constructor(
     private val ownerUseCases: OwnerUseCases
 ): ViewModel() {
 
-    //Offline error, logout()
+    //TODO : Offline error
 
     private val _state = mutableStateOf(OwnerHomeState.default)
     val state: State<OwnerHomeState> = _state

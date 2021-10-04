@@ -5,4 +5,6 @@
     <string name="welcome">Welcome %s!</string>
     <string name="min_stars">Min. Stars : </string>
     <string name="retry">Retry</string>
+    <string name="no_restaurants">No restaurants found, Create a new one!</string>
+    <string name="no_reviews">No new reviews found!</string>
 </resources>

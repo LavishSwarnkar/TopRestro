@@ -1,5 +1,9 @@
 package com.lavish.toprestro.featureOwner.domain.model
 
+import com.lavish.compose.ui.theme.Stars2
+import com.lavish.compose.ui.theme.Stars3
+import com.lavish.compose.ui.theme.Stars4
+import com.lavish.compose.ui.theme.Stars5
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,5 +38,13 @@ data class Review(var id: String?,
         val sdf = SimpleDateFormat("dd MMM", Locale.ENGLISH)
         return sdf.format(timestamp)
     }
+
+    fun colorForRating() = when {
+        starRating > 4 -> Stars5
+        starRating > 3 -> Stars4
+        starRating > 2 -> Stars3
+        else -> Stars2
+    }
+
 
 }

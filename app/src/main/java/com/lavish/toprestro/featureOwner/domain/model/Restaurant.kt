@@ -2,6 +2,7 @@ package com.lavish.toprestro.featureOwner.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class Restaurant(
@@ -23,4 +24,8 @@ data class Restaurant(
         )
 
         override fun toString(): String = name
+
+        companion object {
+                fun randomRestroImageUrl() = "https://picsum.photos/720/512?id=${Random().nextInt(100)}"
+        }
 }
