@@ -53,12 +53,13 @@ class OwnerRepositoryImpl(
     }
 
     @Throws(FirestoreException::class)
-    override suspend fun createNewRestaurant(restaurant: Restaurant) {
+    override suspend fun createNewRestaurant(restaurant: Restaurant): String {
         try {
-            FirebaseFirestore.getInstance()
+            val doc = FirebaseFirestore.getInstance()
                 .collection("restaurants")
                 .add(restaurant)
                 .await()
+            return doc.id
         } catch (e: Exception) {
             throw FirestoreException(e.message.toString())
         }

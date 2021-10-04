@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lavish.toprestro.featureOwner.domain.model.Restaurant
 import com.lavish.toprestro.featureOwner.domain.model.Review
+import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
 import com.lavish.toprestro.featureOwner.domain.usecases.OwnerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OwnerHomeViewModel @Inject constructor(
+    private val prefsRepository: PrefsRepository,
     private val ownerUseCases: OwnerUseCases
 ): ViewModel() {
 
@@ -86,6 +88,9 @@ class OwnerHomeViewModel @Inject constructor(
     private fun createNewRestaurant(restaurant: Restaurant) {
         viewModelScope.launch {
             try {
+                //Add ownerEmail to restaurant
+                restaurant.ownerEmail = prefsRepository.getProfile().emailId
+
                 ownerUseCases.createNewRestaurant(restaurant)
                 _eventFlow.emit(OwnerHomeUiEvent.TaskSucceeded)
             } catch (e: Exception) {

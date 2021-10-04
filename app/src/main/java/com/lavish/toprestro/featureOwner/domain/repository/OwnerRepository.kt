@@ -11,7 +11,7 @@ interface OwnerRepository {
 
     suspend fun getReviews(): List<Review>
 
-    suspend fun createNewRestaurant(restaurant: Restaurant)
+    suspend fun createNewRestaurant(restaurant: Restaurant): String
 
     suspend fun replyReview(review: Review, reply: String)
 

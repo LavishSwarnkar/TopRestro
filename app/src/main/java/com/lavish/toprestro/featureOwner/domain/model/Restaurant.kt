@@ -9,7 +9,7 @@ data class Restaurant(
         var id: String,
         val name: String,
         val imageURL: String,
-        val ownerEmail: String,
+        var ownerEmail: String,
         var avgRating: Float = 0f,
         var noOfRatings: Int = 0) {
 

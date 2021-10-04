@@ -10,7 +10,8 @@ class CreateNewRestaurant(
 ) {
 
     suspend operator fun invoke(restaurant: Restaurant) {
-        ownerRepository.createNewRestaurant(restaurant)
+        val restroId = ownerRepository.createNewRestaurant(restaurant)
+        restaurant.id = restroId
         restaurantRepository.insertRestaurant(restaurant)
     }
 
