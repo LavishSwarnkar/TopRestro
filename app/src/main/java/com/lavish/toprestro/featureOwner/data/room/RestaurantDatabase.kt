@@ -17,7 +17,7 @@ abstract class RestaurantDatabase: RoomDatabase() {
 @Dao
 interface RestaurantDao {
 
-    @Query("SELECT * FROM restaurant")
+    @Query("SELECT * FROM restaurant ORDER BY name")
     fun getAllRestaurants(): Flow<List<Restaurant>>
 
     @Insert(onConflict = REPLACE)

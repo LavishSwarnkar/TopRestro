@@ -5,6 +5,11 @@ import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import com.lavish.toprestro.featureLogin.data.repository.LoginRepositoryImpl
+import com.lavish.toprestro.featureLogin.domain.repository.LoginRepository
+import com.lavish.toprestro.featureLogin.domain.usecases.CreateAccount
+import com.lavish.toprestro.featureLogin.domain.usecases.Login
+import com.lavish.toprestro.featureLogin.domain.usecases.LoginUseCases
 import com.lavish.toprestro.featureOwner.data.firestore.OwnerRepositoryImpl
 import com.lavish.toprestro.featureOwner.data.prefs.PrefsRepositoryImpl
 import com.lavish.toprestro.featureOwner.data.room.RestaurantDatabase
@@ -47,22 +52,33 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideOwnerRepository(
-        prefsRepository: PrefsRepository,
-        restaurantRepository: RestaurantRepository
-    ): OwnerRepository {
-        return OwnerRepositoryImpl(prefsRepository, restaurantRepository)
-    }
+    fun provideOwnerRepository(): OwnerRepository = OwnerRepositoryImpl()
 
     @Provides
     @Singleton
-    fun provideRestaurantRepository(db: RestaurantDatabase): RestaurantRepository {
-        return RestaurantRepositoryImpl(db.restaurantDao())
-    }
+    fun provideRestaurantRepository(db: RestaurantDatabase): RestaurantRepository =
+        RestaurantRepositoryImpl(db.restaurantDao())
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(): LoginRepository = LoginRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCases(
+        loginRepository: LoginRepository,
+        restaurantRepository: RestaurantRepository,
+        ownerRepository: OwnerRepository,
+        prefsRepository: PrefsRepository
+    ): LoginUseCases = LoginUseCases(
+        Login(loginRepository, restaurantRepository, ownerRepository, prefsRepository),
+        CreateAccount(loginRepository, prefsRepository)
+    )
 
     @Provides
     @Singleton
     fun provideOwnerUseCases(
+        prefsRepository: PrefsRepository,
         ownerRepository: OwnerRepository,
         restaurantRepository: RestaurantRepository
     ): OwnerUseCases {
@@ -70,7 +86,7 @@ class AppModule {
         return OwnerUseCases(
             CreateNewRestaurant(ownerRepository, restaurantRepository),
             GetRestaurants(restaurantRepository),
-            GetReviews(ownerRepository),
+            GetReviews(prefsRepository, ownerRepository),
             ReplyReview(ownerRepository)
         )
     }

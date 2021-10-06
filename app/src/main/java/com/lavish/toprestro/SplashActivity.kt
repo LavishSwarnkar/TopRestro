@@ -1,9 +1,10 @@
-package com.lavish.toprestro.featureOwner.presentation.login
+package com.lavish.toprestro
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.lavish.toprestro.featureLogin.presentation.LoginActivity
 import com.lavish.toprestro.featureOwner.domain.repository.LoginStatus
 import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
 import com.lavish.toprestro.featureOwner.presentation.MainActivity

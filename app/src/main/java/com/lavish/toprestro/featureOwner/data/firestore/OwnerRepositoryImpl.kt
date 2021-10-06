@@ -6,27 +6,27 @@ import com.lavish.toprestro.featureOwner.domain.model.Restaurant
 import com.lavish.toprestro.featureOwner.domain.model.Review
 import com.lavish.toprestro.featureOwner.domain.repository.FirestoreException
 import com.lavish.toprestro.featureOwner.domain.repository.OwnerRepository
-import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
-import com.lavish.toprestro.featureOwner.domain.repository.RestaurantRepository
 import kotlinx.coroutines.tasks.await
 
-class OwnerRepositoryImpl(
-    val prefsRepository: PrefsRepository,
-    val restaurantRepository: RestaurantRepository
-) : OwnerRepository {
+class OwnerRepositoryImpl : OwnerRepository {
 
     @Throws(FirestoreException::class)
-    override suspend fun getAllRestaurants(): List<Restaurant> {
-        val ownerProfile = prefsRepository.getProfile()
-
+    override suspend fun getAllRestaurantsOf(ownerEmail: String): List<Restaurant> {
         try {
             val restaurants = FirebaseFirestore.getInstance()
                 .collection("restaurants")
-                .whereEqualTo("ownerEmail", ownerProfile.emailId)
+                .whereEqualTo("ownerEmail", ownerEmail)
                 .get()
                 .await()
-                .toObjects(Restaurant::class.java)
-            restaurantRepository.insertAllRestaurants(restaurants)
+                .filter { doc ->
+                    doc != null && doc.exists()
+                }
+                .map { doc ->
+                    val restaurant = doc.toObject(Restaurant::class.java)
+                    restaurant.id = doc.id
+                    restaurant
+                }
+
             return restaurants
         } catch (e: Exception) {
             throw FirestoreException(e.message.toString())
@@ -34,19 +34,16 @@ class OwnerRepositoryImpl(
     }
 
     @Throws(FirestoreException::class)
-    override suspend fun getReviews(): List<Review> {
-        val ownerProfile = prefsRepository.getProfile()
-
+    override suspend fun getAllPendingReviews(ownerEmail: String): List<Review> {
         try {
-            val reviews = FirebaseFirestore.getInstance()
+            return FirebaseFirestore.getInstance()
                 .collectionGroup("reviews")
-                .whereEqualTo("ownerEmail", ownerProfile.emailId)
+                .whereEqualTo("ownerEmail", ownerEmail)
                 .whereEqualTo("reply", null)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .await()
                 .toObjects(Review::class.java)
-            return reviews
         } catch (e: Exception) {
             throw FirestoreException(e.message.toString())
         }

@@ -15,11 +15,17 @@ class TextInputDialog(val context: Context) {
 
     lateinit var dialog: AlertDialog
     lateinit var b: DialogTextInputBinding
-    lateinit var listener: OnInputCompleteListener
 
-    fun takeInput(title: String, icon: Int, inputHint: String, type: Int, buttonText: String, cancellable: Boolean, prefill: String = "", listener: OnInputCompleteListener) {
-
-        this.listener = listener
+    fun takeInput(
+        title: String,
+        icon: Int,
+        inputHint: String,
+        type: Int,
+        buttonText: String,
+        cancellable: Boolean,
+        prefill: String = "",
+        onInputSubmit: (String) -> Unit
+    ) {
 
         //Layout
         b = DialogTextInputBinding.inflate(LayoutInflater.from(context))
@@ -58,14 +64,14 @@ class TextInputDialog(val context: Context) {
         //Button
         b.submitBtn.apply {
             text = buttonText
-            setOnClickListener { onSubmit() }
+            setOnClickListener { onSubmit(onInputSubmit) }
         }
     }
 
-    private fun onSubmit() {
+    private fun onSubmit(onInputSubmit: (String) -> Unit) {
         if(validateInput()){
             val input = b.editText.editText?.text!!.toString().trim()
-            listener.onSubmit(input)
+            onInputSubmit(input)
             dialog.dismiss()
         }
     }
@@ -77,8 +83,4 @@ class TextInputDialog(val context: Context) {
 
         return isValid
     }
-}
-
-interface OnInputCompleteListener {
-    fun onSubmit(input: String)
 }

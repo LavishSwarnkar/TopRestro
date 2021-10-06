@@ -5,7 +5,7 @@ import com.lavish.toprestro.featureOwner.domain.model.Profile
 //Local preferences repository to access owner profile
 interface PrefsRepository {
 
-    suspend fun saveProfile(profile: Profile, type: String)
+    suspend fun saveProfile(profile: Profile, userType: String)
 
     suspend fun getProfile(): Profile
 

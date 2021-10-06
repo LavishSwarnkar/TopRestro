@@ -15,10 +15,10 @@ class PrefsRepositoryImpl(
     private val datastore: DataStore<Preferences>
 ): PrefsRepository {
 
-    override suspend fun saveProfile(profile: Profile, type: String) {
+    override suspend fun saveProfile(profile: Profile, userType: String) {
         datastore.edit {
             it[stringPreferencesKey(KEY_PROFILE)] = Gson().toJson(profile)
-            it[stringPreferencesKey(KEY_LOGGED_IN_AS)] = type
+            it[stringPreferencesKey(KEY_LOGGED_IN_AS)] = userType
         }
     }
 

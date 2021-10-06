@@ -7,9 +7,9 @@ import com.lavish.toprestro.featureOwner.domain.model.Review
 interface OwnerRepository {
 
     @Throws(FirestoreException::class)
-    suspend fun getAllRestaurants(): List<Restaurant>
+    suspend fun getAllRestaurantsOf(ownerEmail: String): List<Restaurant>
 
-    suspend fun getReviews(): List<Review>
+    suspend fun getAllPendingReviews(ownerEmail: String): List<Review>
 
     suspend fun createNewRestaurant(restaurant: Restaurant): String
 

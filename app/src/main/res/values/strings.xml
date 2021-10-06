@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TopRestro</string>
     <string name="error_login">Something went wrong while logging in (Error code - %d). Please try again after sometime!</string>
-    <string name="error_fetch_profile">\"Something went wrong while etching account details : \"</string>
+    <string name="error_fetch_profile">\"Something went wrong while fetching account details : \"</string>
     <string name="welcome">Welcome %s!</string>
     <string name="min_stars">Min. Stars : </string>
     <string name="retry">Retry</string>
