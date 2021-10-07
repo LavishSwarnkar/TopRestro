@@ -13,11 +13,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarStyle
 import com.lavish.toprestro.R
 import com.lavish.toprestro.featureOwner.domain.model.Review
+import java.util.*
+
+@Preview
+@Composable
+fun Review() {
+    ReviewItem(review = Review(
+        "",
+        Date(),
+        "Lavish",
+        "",
+        "",
+        "",
+        4f,
+        "Very good restaurant",
+        "",
+        "RJ14"
+    )) {
+
+    }
+}
 
 @Composable
 fun ReviewItem(

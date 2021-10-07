@@ -18,6 +18,12 @@ import com.lavish.toprestro.featureOwner.domain.repository.OwnerRepository
 import com.lavish.toprestro.featureOwner.domain.repository.PrefsRepository
 import com.lavish.toprestro.featureOwner.domain.repository.RestaurantRepository
 import com.lavish.toprestro.featureOwner.domain.usecases.*
+import com.lavish.toprestro.featureUser.data.firestore.UserRepositoryImpl
+import com.lavish.toprestro.featureUser.domain.repository.UserRepository
+import com.lavish.toprestro.featureUser.domain.usecases.GetReviewsFor
+import com.lavish.toprestro.featureUser.domain.usecases.GetUserProfile
+import com.lavish.toprestro.featureUser.domain.usecases.NewReview
+import com.lavish.toprestro.featureUser.domain.usecases.UserUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,6 +71,10 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideUserRepository(): UserRepository = UserRepositoryImpl()
+
+    @Provides
+    @Singleton
     fun provideLoginUseCases(
         loginRepository: LoginRepository,
         restaurantRepository: RestaurantRepository,
@@ -88,6 +98,20 @@ class AppModule {
             GetRestaurants(restaurantRepository),
             GetReviews(prefsRepository, ownerRepository),
             ReplyReview(ownerRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserUseCases(
+        prefsRepository: PrefsRepository,
+        userRepository: UserRepository
+    ): UserUseCases {
+        return UserUseCases(
+            com.lavish.toprestro.featureUser.domain.usecases.GetRestaurants(userRepository),
+            GetReviewsFor(userRepository),
+            NewReview(userRepository),
+            GetUserProfile(prefsRepository)
         )
     }
 

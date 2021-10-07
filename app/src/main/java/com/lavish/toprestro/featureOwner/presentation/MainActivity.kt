@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.lavish.compose.ui.theme.TopRestroTheme
 import com.lavish.toprestro.featureOwner.presentation.ownerHome.OwnerHomeScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.text.Typography.dagger
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

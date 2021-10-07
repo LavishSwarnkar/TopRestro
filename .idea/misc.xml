@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android/The Streamliners/TopRestro/app/src/main/res/layout/card_review.xml" value="0.1852355072463768" />
+        <entry key="..\:/Projects/Android/The Streamliners/TopRestro/app/src/main/res/layout/fragment_restro.xml" value="0.1852355072463768" />
+        <entry key="..\:/Projects/Android/The Streamliners/TopRestro/app/src/main/res/layout/fragment_user_home.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/The Streamliners/TopRestro/app/src/main/res/layout/header_user_restro_activity.xml" value="0.1852355072463768" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/TopRestro/app/src/main/res/drawable/bg_light.xml" value="0.171875" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/TopRestro/app/src/main/res/drawable/ic_reply.xml" value="0.171875" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/TopRestro/app/src/main/res/layout/activity_admin.xml" value="0.1" />
